@@ -1,0 +1,81 @@
+.java_buttton{
+    background-color: lightcyan;
+    border: solid 2px lightslategrey;
+}
+
+#contents_area{
+    background-color: maroon;
+    width: 100vw;
+    height: auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+
+}
+
+#contents_box{
+    display: flex;
+    align-items: stretch;
+    background-color: rgb(212, 212, 212);
+    width: 80%;
+    height: 170px;
+    border:solid 2px slategray;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin: 3% auto;
+
+}
+#icon{
+    background-color: #c42734;
+    width: 20%;
+    margin-left: 2%;
+    border: solid 2px slategrey;
+
+}
+#article_base{
+    background-color: rgb(137, 161, 28);
+    width: 100%;
+    margin-right: 2%;
+
+}
+#article_text{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(116, 78, 71);
+    width: 80%;
+    height: 100%;
+
+}
+#article1{
+    background-color: khaki;
+    width: 100%;
+    height: 70%;
+}
+#article2{
+    display: flex;
+    align-items: stretch;
+    background-color: lightcoral;
+    width: 100%;
+    height: 30%;
+}
+.title{
+    background-color: rgb(132, 169, 173);
+    text-align: center;
+    height: 50%;
+
+}
+.caption{
+    background-color: teal;
+    height: 50%;
+
+}
+.author{
+    background-color: red;
+    width: 50%;
+
+
+}
+.view_int{
+    background-color: royalblue;
+    width: 50%
+}
+
