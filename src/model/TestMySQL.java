@@ -16,8 +16,9 @@ public class TestMySQL {
 			try  {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				Connection conn = DriverManager.getConnection(URL,USER,PASS);
-      // データベースに対する処理
-      System.out.println("イエス");
+				// データベースに対する処理
+				System.out.println("イエス");
+
 
   } catch (SQLException | ClassNotFoundException e){
      e.printStackTrace();

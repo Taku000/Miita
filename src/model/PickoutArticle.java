@@ -7,9 +7,12 @@ import java.util.List;
 import dao.SampleDAO;
 
 public class PickoutArticle implements Serializable {
-	public static ArrayList<Article> RequestArticle(String categori){
+	public static ArrayList<Article> RequestArticle(String category){
+//		記事の情報をDBから貰う
+		List<PreArticleData> predata = SampleDAO.RequestTable(category);
 
-		List<PreArticleData> predata = SampleDAO.RequestTable(categori);
+//		貰った情報を表示できる形に加工する
+
 
 		Article articledata1 = new Article();
 		Article articledata2 = new Article();
