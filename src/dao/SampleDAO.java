@@ -41,7 +41,7 @@ public class SampleDAO implements Serializable{
 //	}
 	public static ArrayList<PreArticleData> RequestTable(String catego) {
 		//返り値用変数準備
-		ArrayList<PreArticleData> predata = new ArrayList<PreArticleData>();
+		ArrayList<PreArticleData> preData = new ArrayList<PreArticleData>();
 
 
 		//SQL文作成
@@ -60,9 +60,9 @@ public class SampleDAO implements Serializable{
 					String url = rs.getString(2);
 					String category = rs.getString(3);
 					int access = rs.getInt(4);
-					predata.add(new PreArticleData(id, url, category, access));
+					preData.add(new PreArticleData(id, url, category, access));
 				}
-				return predata;
+				return preData;
 
 
 				} catch (SQLException | ClassNotFoundException e){

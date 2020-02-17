@@ -15,59 +15,33 @@ import dao.SampleDAO;
 
 public class PickoutArticle implements Serializable {
 	//成形したjsonデータを一旦収納するインスタンス
-	static Article jsonArticle = new Article();
+//	Article jsonArticle = new Article();
 
-	public static ArrayList<Article> RequestArticle(String category) {
+	public  static ArrayList<Article> RequestArticle(String category) {
 		//		記事の情報をDBから貰う
-		ArrayList<PreArticleData> predata = SampleDAO.RequestTable(category);
+		ArrayList<PreArticleData> preData = SampleDAO.RequestTable(category);
+		ArrayList<Article> article = new ArrayList<Article>();
+//		Article jsonArticle = new Article();
 
 		//		貰った情報を表示できる形に加工する
+		//記事数カウント変数
+		int size = preData.size();
 
-		jsonArticle.url = predata.get(0).url;
-		String prearticleId = CutOutURL(predata.get(0).url);
-		String urlString = "https://qiita.com/api/v2/items/" + prearticleId;
+		//predataのListの数だけarticleListにadd
 
+		for(int i = 0; i < size; i++)
+		{
+//			jsonArticle.url = preData.get(i).url;
+			String prearticleId = CutOutURL(preData.get(i).url);
+			String urlString = "https://qiita.com/api/v2/items/" + prearticleId;
+			Article articleData = new Article();
+			articleData = GetContent(urlString);
+			article.add(articleData);
 
-		Article articledata = new Article();
-
-		articledata = GetContent(urlString);
-
-
-		//		Article articledata2 = new Article();
-		//		Article articledata3 = new Article();
-		//		Article articledata4 = new Article();
-		//
-		//		articledata1.title = "題名１";
-		//		articledata1.caption = "キャプション１---------";
-		//		articledata1.view = predata.get(0).access;
-		//		articledata1.author = "作者１";
-		//		articledata1.id= predata.get(0).id;
-		//
-		//		articledata2.title = "題名2";
-		//		articledata2.caption = "キャプション2---------";
-		//		articledata2.view = predata.get(1).access;
-		//		articledata2.author = "作者2";
-		//		articledata2.id= predata.get(1).id;
-		//
-		//		articledata3.title = "題名3";
-		//		articledata3.caption = "キャプション3---------";
-		//		articledata3.view = predata.get(2).access;
-		//		articledata3.author = "作者3";
-		//		articledata3.id= predata.get(2).id;
-		//
-		//		articledata4.title = "題名4";
-		//		articledata4.caption = "キャプション4---------";
-		//		articledata4.view = predata.get(3).access;
-		//		articledata4.author = "作者4";
-		//		articledata4.id= predata.get(3).id;
-
-		ArrayList<Article> article = new ArrayList<Article>();
-		article.add(articledata);
-		//		article.add(articledata2);
-		//		article.add(articledata3);
-		//		article.add(articledata4);
+		}
 
 		return article;
+
 	}
 
 	//URL切り取るメソッド
@@ -89,7 +63,8 @@ public class PickoutArticle implements Serializable {
 	}
 
 	//記事のリンクを取得するメソッド
-	public static Article GetContent(String urlString) {
+	public  static Article GetContent(String urlString) {
+		Article jsonArticle = new Article();
 
 		String script = "";
 		try {
@@ -123,12 +98,14 @@ public class PickoutArticle implements Serializable {
 			String userIcon = node.get("user").get("profile_image_url").asText();
 			String authorName = node.get("user").get("github_login_name").asText();
 			String date = (node.get("updated_at").asText()).substring(0,10).replace("\"", "");
+			String urlLink = node.get("url").asText();
 
 			jsonArticle.title = title;
 			jsonArticle.caption = caption;
 			jsonArticle.userIcon = userIcon;
 			jsonArticle.author = authorName;
 			jsonArticle.date = date;
+			jsonArticle.url = urlLink;
 
 
 
