@@ -43,6 +43,7 @@
 				<div id="icon">
 				</div>
 				<div id="article_base">
+				<a href= "<%=articles.get(i).url%>"></a>
 					<div id="article_text">
 						<div  id="article1">
 							<div class="title"><%=articles.get(i).title%>

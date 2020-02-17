@@ -24,6 +24,8 @@
     margin: 3% auto;
 
 }
+
+
 #icon{
     background-color: #c42734;
     width: 20%;
@@ -32,11 +34,22 @@
 
 }
 #article_base{
+	position: relative;
     background-color: rgb(137, 161, 28);
     width: 100%;
     margin-right: 2%;
 
 }
+
+#article_base a{
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-indent:-999px;
+}
+
 #article_text{
     display: flex;
     flex-direction: column;

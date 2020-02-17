@@ -23,6 +23,7 @@ public class PickoutArticle implements Serializable {
 
 		//		貰った情報を表示できる形に加工する
 
+		jsonArticle.url = predata.get(0).url;
 		String prearticleId = CutOutURL(predata.get(0).url);
 		String urlString = "https://qiita.com/api/v2/items/" + prearticleId;
 
