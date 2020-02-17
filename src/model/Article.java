@@ -6,7 +6,30 @@ public class Article implements Serializable{
 	public String title;
 	public String caption;
 	public int view;
-	
+	public String url;
+	public String author;
+	public String userIcon;
+	public String date;
+	public int id;
+
+
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getUserIcon() {
+		return userIcon;
+	}
+	public void setUserIcon(String userIcon) {
+		this.userIcon = userIcon;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -37,7 +60,9 @@ public class Article implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String author;
-	public int id;
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 }

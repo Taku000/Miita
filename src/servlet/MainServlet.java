@@ -33,8 +33,8 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String categori = request.getParameter("categori");
-		ArrayList<Article> articleList = PickoutArticle.RequestArticle(categori);
+		String category = request.getParameter("category");
+		ArrayList<Article> articleList = PickoutArticle.RequestArticle(category);
 		HttpSession session = request.getSession();
 		request.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");

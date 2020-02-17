@@ -26,7 +26,7 @@
 	</header>
 
 	<form method="GET" action="/Sample00/MainServlet">
-		<button type="submit" class="java_buttton" name=categori value="Java">Java</button>
+		<button type="submit" class="java_buttton" name=category value="Java">Java</button>
 	</form>
 	<div id="contents_area">
 
