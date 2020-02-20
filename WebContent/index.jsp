@@ -28,6 +28,13 @@
 		<button type="submit" class="java_buttton" name=category value="Java">Java</button>
 	</form>
 	<div id="contents_area">
+	<div class="sort">
+			<select name="sort" class="sort_box">
+				<option value="1" class ="sort1">新着順</option>
+				<option value="2">投稿順</option>
+				<option value="3">閲覧数順</option>
+			</select>
+		</div>
 
 		<%
 			if (articleList == null) {

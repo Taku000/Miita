@@ -11,7 +11,26 @@
     padding-bottom: 1%;
 
 }
+.sort{
+    position: relative;
+    margin-left: 70%;
+    margin-right: 10%;
+    margin-bottom: 5%;
 
+}
+.sort select {
+    position: absolute;
+    text-align: center;
+    text-align:webkit-center;
+    display: block;
+    width: 150px;
+    height: 30px;
+    color: rgb(36, 35, 35);
+    background: #ffffff;
+    outline: none;
+    border-radius: 2px;
+    cursor: pointer;
+  }
 
 #contents_box{
     display: flex;
