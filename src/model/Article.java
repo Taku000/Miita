@@ -1,35 +1,38 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Article implements Serializable{
+	public int id;
+	public String url;
+	public String category;
 	public String title;
 	public String caption;
-	public int view;
-	public String url;
-	public String author;
-	public String userIcon;
-	public String date;
-	public int id;
+	public String userName;
+	public String tag;
+	public Date date;
+	public int access;
 
 
-	public String getDate() {
-		return date;
+	public int getId() {
+		return id;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getUserIcon() {
-		return userIcon;
-	}
-	public void setUserIcon(String userIcon) {
-		this.userIcon = userIcon;
-	}
-
 	public String getUrl() {
 		return url;
 	}
-
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -42,27 +45,43 @@ public class Article implements Serializable{
 	public void setCaption(String caption) {
 		this.caption = caption;
 	}
-	public int getView() {
-		return view;
+	public String getUserName() {
+		return userName;
 	}
-	public void setView(int view) {
-		this.view = view;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public String getAuthor() {
-		return author;
+	public String getTag() {
+		return tag;
 	}
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
-	public int getId() {
-		return id;
+	public Date getDate() {
+		return date;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public int getAccess() {
+		return access;
+	}
+	public void setAccess(int access) {
+		this.access = access;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public Article() {}
+	public Article(int id, String url,String category,String title, String caption, String userName, String tag, Date date, int access ) {
+		this.id = id;
+		 this.url = url;
+		 this.category = category;
+		 this.title = title;
+		 this.caption = caption;
+		 this.userName = userName;
+		 this.tag = tag;
+		 this.date = date;
+		 this.access = access;
+
 	}
 
 }

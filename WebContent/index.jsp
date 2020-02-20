@@ -5,10 +5,9 @@
 <%@ page import="java.util.ArrayList"%>
 
 <%
-	ArrayList<Article> articles = (ArrayList<Article>) request.getAttribute("ARTICLE_LIST");
+	ArrayList<Article> articleList = (ArrayList<Article>) request.getAttribute("ARTICLE_LIST");
 	int size;
 %>
-
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -31,34 +30,40 @@
 	<div id="contents_area">
 
 		<%
-			if (articles == null) {
+			if (articleList == null) {
 		%>
 		<%
 			} else {
 		%>
 			<%
-				for (int i = 0; i < (size = articles.size()); i++) {
+				for (int i = 0; i < (size = articleList.size()); i++) {
 			%>
 			<div id="contents_box">
-				<div id="icon">
-				</div>
+                <img src="https://qiita-image-store.s3.amazonaws.com/0/82030/profile-images/1473702308" id="icon" >
 				<div id="article_base">
-				<a href= "<%=articles.get(i).url%>"></a>
 					<div id="article_text">
 						<div  id="article1">
-							<div class="title"><%=articles.get(i).title%>
+							<div class="title"><%=articleList.get(i).title%>
 							</div>
-							<div class="caption"><%=articles.get(i).caption%>
+							<div class="caption"><%=articleList.get(i).caption%>
 							</div>
+							<a href= "<%=articleList.get(i).url%>"></a>
 						</div>
 						<div  id="article2">
-							<div class="author"><%=articles.get(i).author%>
+							<div class="author"><%=articleList.get(i).userName%>
 							</div>
-							<div class="view_int">閲覧数:<%=articles.get(i).view%>
+							<div class="view_int">閲覧数:<%=articleList.get(i).access%>
 							</div>
 						</div>
-					</div>
-				</div>
+                    </div>
+                </div>
+                <div id ="side_menu">
+                    <div class ="date"><%=articleList.get(i).date%>
+                    </div>
+                    <div class="delete">
+                        削除
+                    </div>
+                </div>
 			</div>
 			<%
 			}

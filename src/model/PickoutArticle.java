@@ -15,47 +15,38 @@ import dao.SampleDAO;
 
 public class PickoutArticle implements Serializable {
 	//成形したjsonデータを一旦収納するインスタンス
-//	Article jsonArticle = new Article();
 
-	public  static ArrayList<Article> RequestArticle(String category) {
+	public static ArrayList<Article> RequestArticle(String category) {
 		//		記事の情報をDBから貰う
-		ArrayList<PreArticleData> preData = SampleDAO.RequestTable(category);
-		ArrayList<Article> article = new ArrayList<Article>();
-//		Article jsonArticle = new Article();
-
-		//		貰った情報を表示できる形に加工する
-		//記事数カウント変数
-		int size = preData.size();
-
-		//predataのListの数だけarticleListにadd
-
-		for(int i = 0; i < size; i++)
-		{
-//			jsonArticle.url = preData.get(i).url;
-			String prearticleId = CutOutURL(preData.get(i).url);
-			String urlString = "https://qiita.com/api/v2/items/" + prearticleId;
-			Article articleData = new Article();
-			articleData = GetContent(urlString);
-			article.add(articleData);
-
+		ArrayList<Article> articleData = SampleDAO.RequestTable(category);
+		ArrayList<Article> articleList = new ArrayList<Article>();
+		articleList = articleData;
+		if (articleList == null) {
+			return null;
 		}
-
-		return article;
-
+		return articleList;
 	}
+//		//		貰った情報を表示できる形に加工する
+//		//記事数カウント変数
+//		int size = articleData.size();
+//		//predataのListの数だけarticleListにadd
+//		for (int i = 0; i < size; i++) {
+//			String qiitaId = CutOutURL(articleData.get(i).url);
+//			String urlString = "https://qiita.com/api/v2/items/" + qiitaId;
+//			Article articleData = new Article();
+//			articleData = GetContent(urlString);
+//			article.add(articleData);
 
 	//URL切り取るメソッド
 	public static String CutOutURL(String url) {
 		String fullURL = url;
 		String itemsId;
 		String id;
-
 		//受け取ったURLをitems以降の文字列に切り取り
 		if (fullURL.contains("items/")) {
 			itemsId = fullURL.substring(fullURL.indexOf("items/"));
 			id = itemsId.substring(6);
-		}
-		else {
+		} else {
 			itemsId = fullURL.substring(fullURL.indexOf("private/"));
 			id = itemsId.substring(8);
 		}
@@ -63,7 +54,7 @@ public class PickoutArticle implements Serializable {
 	}
 
 	//記事のリンクを取得するメソッド
-	public  static Article GetContent(String urlString) {
+	public static Article GetContent(String urlString) {
 		Article jsonArticle = new Article();
 
 		String script = "";
@@ -93,22 +84,19 @@ public class PickoutArticle implements Serializable {
 			JsonNode node = mapper.readTree(script);
 			//必要なものを取り出す
 			String title = node.get("title").asText();
-			String caption = (node.get("body").asText()).substring(0, 100).replace("\n", "").
-					replace("#", "").replace("*", "").replace("~", "");
+			String caption = (node.get("body").asText()).substring(0, 100).replace("\n", "").replace("#", "")
+					.replace("*", "").replace("~", "");
 			String userIcon = node.get("user").get("profile_image_url").asText();
 			String authorName = node.get("user").get("github_login_name").asText();
-			String date = (node.get("updated_at").asText()).substring(0,10).replace("\"", "");
+			String date = (node.get("updated_at").asText()).substring(0, 10).replace("\"", "");
 			String urlLink = node.get("url").asText();
-
-			jsonArticle.title = title;
-			jsonArticle.caption = caption;
-			jsonArticle.userIcon = userIcon;
-			jsonArticle.author = authorName;
-			jsonArticle.date = date;
-			jsonArticle.url = urlLink;
-
-
-
+//
+//			jsonArticle.title = title;
+//			jsonArticle.caption = caption;
+//			jsonArticle.userIcon = userIcon;
+//			jsonArticle.author = authorName;
+//			jsonArticle.date = date;
+//			jsonArticle.url = urlLink;
 
 		} catch (Exception e) {
 			return null;
