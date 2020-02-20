@@ -39,7 +39,7 @@
 				for (int i = 0; i < (size = articleList.size()); i++) {
 			%>
 			<div id="contents_box">
-                <img src="https://qiita-image-store.s3.amazonaws.com/0/82030/profile-images/1473702308" id="icon" >
+                <img src="" id="icon" >
 				<div id="article_base">
 					<div id="article_text">
 						<div  id="article1">
