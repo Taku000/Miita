@@ -39,7 +39,7 @@
 				for (int i = 0; i < (size = articleList.size()); i++) {
 			%>
 			<div id="contents_box">
-                <img src="" id="icon" >
+                <img src="./img/<%=articleList.get(i).category%>.png" id="icon" >
 				<div id="article_base">
 					<div id="article_text">
 						<div  id="article1">
