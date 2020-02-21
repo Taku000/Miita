@@ -1,8 +1,16 @@
+#category_button{
+    display: inline-block;
+    width: fit-content;
+    margin: auto 0;
+}
+
 .java_buttton{
+    display: inline-block;
     background-color: lightcyan;
     border: solid 2px lightslategrey;
 }
 .Linux_buttton{
+    display: inline-block;
     background-color: lightcyan;
     border: solid 2px lightslategrey;
 }

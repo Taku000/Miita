@@ -29,10 +29,10 @@
 	</header>
 	<!-- カテゴリ検索機能 -->
 	<!-- valueで検索するカテゴリを送信 -->
-	<form method="GET" action="/Sample00/MainServlet">
+	<form method="GET" id="category_button"  action="/Sample00/MainServlet">
 		<button type="submit" class="java_buttton" name=category value="Java">Java</button>
 	</form>
-	<form method="GET" action="/Sample00/MainServlet">
+	<form method="GET" id="category_button" action="/Sample00/MainServlet">
 		<button type="submit" class="Linux_buttton" name=category value="Linux">Linux</button>
 	</form>
 	<div id="contents_area">
