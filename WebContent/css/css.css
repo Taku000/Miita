@@ -11,15 +11,17 @@
     padding-bottom: 1%;
 
 }
-.sort{
+.sort_box{
+    display: inline-block;
     position: relative;
+    background: #ffffff;
     margin-left: 70%;
-    margin-right: 10%;
-    margin-bottom: 5%;
-
+    width: 150px;
+    height: 30px;
+    color: rgb(36, 35, 35);
 }
 .sort select {
-    position: absolute;
+    display: inline-block;
     text-align: center;
     text-align:webkit-center;
     display: block;
@@ -31,6 +33,15 @@
     border-radius: 2px;
     cursor: pointer;
   }
+.sort_button{
+    display: inline-block;
+    background: #ffffff;
+    background-color: ivory;
+    width: auto;
+    height: 30px;
+    border: solid 2px lightgray;
+    border-radius: 3px;
+}
 
 #contents_box{
     display: flex;

@@ -5,7 +5,8 @@
 <%@ page import="java.util.ArrayList"%>
 
 <%
-	ArrayList<Article> articleList = (ArrayList<Article>) request.getAttribute("ARTICLE_LIST");
+	ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
+
 	int size;
 %>
 
@@ -28,13 +29,15 @@
 		<button type="submit" class="java_buttton" name=category value="Java">Java</button>
 	</form>
 	<div id="contents_area">
-	<div class="sort">
-			<select name="sort" class="sort_box">
-				<option value="1" class ="sort1">新着順</option>
-				<option value="2">投稿順</option>
-				<option value="3">閲覧数順</option>
-			</select>
-		</div>
+		<form method="POST" action="/Sample00/MainServlet">
+				<select name ="sort" class="sort_box">
+					<option value="new" >新着順</option>
+					<option value="old">投稿順</option>
+					<option value="view">閲覧数順</option>
+				</select>
+			<button type="submit" class ="sort_button" name ="sort" >並べ替え
+			</button>
+		</form>
 
 		<%
 			if (articleList == null) {

@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Article;
 import model.PickoutArticle;
+import model.Sort;
 
 /**
  * Servlet implementation class MainServlet
@@ -19,7 +21,6 @@ import model.PickoutArticle;
 @WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,7 +36,8 @@ public class MainServlet extends HttpServlet {
 		//jspから受け取ったカテゴリに該当する記事データを探してもらう
 		String category = request.getParameter("category");
 		ArrayList<Article> articleList = PickoutArticle.RequestArticle(category);
-		request.setAttribute("ARTICLE_LIST", articleList);
+		HttpSession session = request.getSession();
+		session.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 //
@@ -46,7 +48,13 @@ public class MainServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		String sortWord = request.getParameter("sort");
+		ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
+		articleList = Sort.SortArticles(articleList, sortWord);
+		session.setAttribute("ARTICLE_LIST", articleList);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

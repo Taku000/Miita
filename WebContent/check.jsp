@@ -16,7 +16,9 @@
 <body>
 <div>
 移動したよ
-<%  if (article !=null)%>
+<%  if (article !=null){%>
+入ってるよ
+<% }%>
 </div>
 </body>
 </html>
