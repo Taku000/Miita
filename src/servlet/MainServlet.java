@@ -33,14 +33,25 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//jspから受け取ったカテゴリに該当する記事データを探してもらう
-		String category = request.getParameter("category");
-		ArrayList<Article> articleList = PickoutArticle.RequestArticle(category);
-		HttpSession session = request.getSession();
-		session.setAttribute("ARTICLE_LIST", articleList);
+		String keyWord = request.getParameter("search_keyword");
+		String category = request.getParameter("search_category");
+		//jspからどちらの検索リクエストがきたかチェック
+		if (category != null) {
+			//jspから受け取ったカテゴリに該当する記事データを探してもらう
+			ArrayList<Article> articleList = PickoutArticle.CategorySearch(category);
+			HttpSession session = request.getSession();
+			session.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
-//
+		}else if (keyWord != null) {
+			//jspから受け取ったキーワードを含む記事データを探してもらう
+			ArrayList<Article> articleList = PickoutArticle.KeyWordSearch(keyWord);
+			HttpSession session = request.getSession();
+			session.setAttribute("ARTICLE_LIST", articleList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
+		}
+
 	}
 
 	/**

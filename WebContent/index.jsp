@@ -30,7 +30,7 @@
 	</header>
 	<!-- キーワード検索機能 -->
 
-	<form action="#" id="search_form">
+	<form method="GET"  id="search_form" action="/Sample00/MainServlet">
 		<input type="text" name="search_keyword" id="search_box">
 		<button type="submit" class="search_button" ><i class="fas fa-search"></i></button>
 	</form>
@@ -38,10 +38,10 @@
 	<!-- カテゴリ検索機能 -->
 	<!-- valueで検索するカテゴリを送信 -->
 	<form method="GET" class="category_button"  action="/Sample00/MainServlet">
-		<button type="submit" class="java_buttton" name=category value="Java">Java</button>
+		<button type="submit" class="java_buttton" name=search_category value="Java">Java</button>
 	</form>
 	<form method="GET" class="category_button" action="/Sample00/MainServlet">
-		<button type="submit" class="Linux_buttton" name=category value="Linux">Linux</button>
+		<button type="submit" class="Linux_buttton" name=search_category value="Linux">Linux</button>
 	</form>
 	<div id="contents_area">
 	<!-- 並べ替え機能 -->

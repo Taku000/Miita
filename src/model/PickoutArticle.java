@@ -16,9 +16,20 @@ import dao.SampleDAO;
 public class PickoutArticle implements Serializable {
 	//成形したjsonデータを一旦収納するインスタンス
 
-	public static ArrayList<Article> RequestArticle(String category) {
+	//カテゴリ検索用メソッド
+	public static ArrayList<Article> CategorySearch(String category) {
 		//		記事の情報をDBから貰う
 		ArrayList<Article> articleData = SampleDAO.RequestTable(category);
+		ArrayList<Article> articleList = new ArrayList<Article>();
+		articleList = Sort.SortArticles(articleData,"new");
+		if (articleList == null) {
+			return null;
+		}
+		return articleList;
+	}
+	//キーワード検索用メソッド
+	public static ArrayList<Article> KeyWordSearch(String keyWord){
+		ArrayList<Article> articleData = SampleDAO.RequestTable(keyWord);
 		ArrayList<Article> articleList = new ArrayList<Article>();
 		articleList = Sort.SortArticles(articleData,"new");
 		if (articleList == null) {
