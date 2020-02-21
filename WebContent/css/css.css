@@ -1,4 +1,24 @@
-#category_button{
+#search_form{
+    display: inline-block;
+    width: 100%;
+    background-color: lightblue;
+}
+#search_box{
+    display: inline-block;
+    width: 20%;
+    margin-right: 0;
+    background-color: lightblue;
+    border: solid 1px rgb(0, 0, 0);
+}
+.search_button{
+    display: inline-block;
+    width: 10%;
+    margin-left: 0;
+    background-color: lightsalmon;
+    border: solid 1px rgb(0, 0, 0);
+}
+
+.category_button{
     display: inline-block;
     width: fit-content;
     margin: auto 0;

@@ -20,6 +20,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/css.css">
 <link rel="stylesheet" type="text/css" href="css/ress.css">
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <title>テストページ</title>
 </head>
 
@@ -27,12 +28,19 @@
 	<header>
 		<div id="head_bar">ロゴ</div>
 	</header>
+	<!-- キーワード検索機能 -->
+
+	<form action="#" id="search_form">
+		<input type="text" name="search_keyword" id="search_box">
+		<button type="submit" class="search_button" ><i class="fas fa-search"></i></button>
+	</form>
+	<p></p>
 	<!-- カテゴリ検索機能 -->
 	<!-- valueで検索するカテゴリを送信 -->
-	<form method="GET" id="category_button"  action="/Sample00/MainServlet">
+	<form method="GET" class="category_button"  action="/Sample00/MainServlet">
 		<button type="submit" class="java_buttton" name=category value="Java">Java</button>
 	</form>
-	<form method="GET" id="category_button" action="/Sample00/MainServlet">
+	<form method="GET" class="category_button" action="/Sample00/MainServlet">
 		<button type="submit" class="Linux_buttton" name=category value="Linux">Linux</button>
 	</form>
 	<div id="contents_area">
