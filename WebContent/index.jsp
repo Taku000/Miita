@@ -32,6 +32,9 @@
 	<form method="GET" action="/Sample00/MainServlet">
 		<button type="submit" class="java_buttton" name=category value="Java">Java</button>
 	</form>
+	<form method="GET" action="/Sample00/MainServlet">
+		<button type="submit" class="Linux_buttton" name=category value="Linux">Linux</button>
+	</form>
 	<div id="contents_area">
 	<!-- 並べ替え機能 -->
 	<!-- セレクトボックスで選択した条件をボタンで送信 -->
