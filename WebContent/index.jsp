@@ -4,8 +4,11 @@
 <%@ page import="servlet.MainServlet"%>
 <%@ page import="java.util.ArrayList"%>
 
+<!-- 記事リストを取得、nullかどうかで表示分岐 -->
 <%
 	ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
+/* 並べ替え機能の条件保持用 */
+	String sortWord = (String) request.getAttribute("SORT_CONDITION");
 
 	int size;
 %>
@@ -24,21 +27,25 @@
 	<header>
 		<div id="head_bar">ロゴ</div>
 	</header>
-
+	<!-- カテゴリ検索機能 -->
+	<!-- valueで検索するカテゴリを送信 -->
 	<form method="GET" action="/Sample00/MainServlet">
 		<button type="submit" class="java_buttton" name=category value="Java">Java</button>
 	</form>
 	<div id="contents_area">
+	<!-- 並べ替え機能 -->
+	<!-- セレクトボックスで選択した条件をボタンで送信 -->
 		<form method="POST" action="/Sample00/MainServlet">
 				<select name ="sort" class="sort_box">
-					<option value="new" >新着順</option>
-					<option value="old">投稿順</option>
-					<option value="view">閲覧数順</option>
+					<option value="new"<%= "new".equals(sortWord) ? " selected=\"selected\"" : "" %> >新着順</option>
+					<option value="old"<%= "old".equals(sortWord) ? " selected=\"selected\"" : "" %>>投稿順</option>
+					<option value="view"<%= "view".equals(sortWord) ? " selected=\"selected\"" : "" %>>閲覧数順</option>
 				</select>
 			<button type="submit" class ="sort_button" name ="sort" >並べ替え
 			</button>
 		</form>
-
+		<!-- 記事の表示機能 -->
+		<!-- 記事リストのスコープに何か入っていたら、並べて表示 -->
 		<%
 			if (articleList == null) {
 		%>

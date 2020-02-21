@@ -48,10 +48,14 @@ public class MainServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//index.jspのソートボタンから送られてきた、並べ替え条件と記事リストの取得
 		HttpSession session = request.getSession();
 		String sortWord = request.getParameter("sort");
 		ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
+		//条件と記事のリストを載せてSortArticlesメソッドを呼び出す
 		articleList = Sort.SortArticles(articleList, sortWord);
+		request.setAttribute("SORT_CONDITION", sortWord);
+		//並べ替えたリストをセッションスコープに上書きしてindex,jspに
 		session.setAttribute("ARTICLE_LIST", articleList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
