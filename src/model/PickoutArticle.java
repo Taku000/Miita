@@ -20,7 +20,7 @@ public class PickoutArticle implements Serializable {
 		//		記事の情報をDBから貰う
 		ArrayList<Article> articleData = SampleDAO.RequestTable(category);
 		ArrayList<Article> articleList = new ArrayList<Article>();
-		articleList = articleData;
+		articleList = Sort.SortArticles(articleData,"new");
 		if (articleList == null) {
 			return null;
 		}
