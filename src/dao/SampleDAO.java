@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 
 import model.Article;
 
@@ -75,5 +76,74 @@ public class SampleDAO implements Serializable{
 				     e.printStackTrace();
 				     return null;
 				}
+	}
+	public static ArrayList<Article> SearchTable(String searchWord) {
+		//返り値用変数 用意
+		ArrayList<Article> articleData = new ArrayList<Article>();
+		//重複記事を格納しないために用意
+		boolean result = true;
+		LinkedHashSet<Integer> hs = new LinkedHashSet<Integer>();
+		//接続＆return
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(URL, USER, PASS);
+
+			//検索語句の作成
+			//全角スペースを半角スペースに変換、半角スペースで単語を区切る
+			String[] separateWord = searchWord.replaceAll("　", " ").split(" ", 0);
+			String sql = "select * from articles WHERE (category LIKE ?) "
+					+ "OR (title LIKE ?)"
+					+ "OR (user_name LIKE ?)"
+					+ "OR(caption LIKE ?)"
+					+ "OR(tag LIKE ?);";
+
+			PreparedStatement pStatement = conn.prepareStatement(sql);
+
+			//区切った単語の数だけ回す
+			for (int i = 0; i < separateWord.length; i++) {
+				// パラメータの数分回す(5つ)
+				for (int j = 0; j < 5; j++) {
+					int num = j + 1;
+					pStatement.setString(num, "%" + separateWord[i] + "%");
+				}
+				ResultSet rs = pStatement.executeQuery();
+				while (rs.next()) {
+
+					int id = rs.getInt(1);
+					String url = rs.getString(2);
+					String category = rs.getString(3);
+					String title = rs.getString(4);
+					String caption = rs.getString(5);
+					String userName = rs.getString(6);
+					String tag = rs.getString(7);
+					Date date = rs.getDate(8);
+					int access = rs.getInt(9);
+					Article article = new Article(id, url, category, title, caption, userName, tag, date, access);
+
+					//セットにarticleクラスのIDを格納する
+					//setに重複するIDがない→true
+					//重複するIDがある→false
+					result = hs.add(article.getId());
+					//※ 確認用コンソール出力 System.out.println(result);
+
+					//trueならそのまま記事をリストに格納
+					if (result == true) {
+						articleData.add(article);
+						//falseならcontinue
+					} else {
+						continue;
+					}
+				}
+			}
+			return articleData;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+
+		}
+		return articleData;
+
 	}
 }

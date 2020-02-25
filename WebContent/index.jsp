@@ -1,5 +1,5 @@
 <%@ page import="javax.naming.directory.SearchResult"%>
-<%@ page contentType="text/html; charset=Shift_JIS" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="model.Article"%>
 <%@ page import="servlet.MainServlet"%>
 <%@ page import="java.util.ArrayList"%>

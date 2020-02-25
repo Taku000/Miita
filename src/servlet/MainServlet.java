@@ -33,6 +33,7 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String keyWord = request.getParameter("search_keyword");
 		String category = request.getParameter("search_category");
 		//jspからどちらの検索リクエストがきたかチェック

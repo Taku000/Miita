@@ -29,7 +29,8 @@ public class PickoutArticle implements Serializable {
 	}
 	//キーワード検索用メソッド
 	public static ArrayList<Article> KeyWordSearch(String keyWord){
-		ArrayList<Article> articleData = SampleDAO.RequestTable(keyWord);
+
+		ArrayList<Article> articleData = SampleDAO.SearchTable(keyWord);
 		ArrayList<Article> articleList = new ArrayList<Article>();
 		articleList = Sort.SortArticles(articleData,"new");
 		if (articleList == null) {
