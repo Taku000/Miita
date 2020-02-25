@@ -27,11 +27,14 @@
 <body>
 	<header>
 		<div id="head_bar">ロゴ</div>
+		<div id="register_area">
+			<button class="regist_button">登録</button>
+		</div>
 	</header>
 	<!-- キーワード検索機能 -->
 
 	<form method="GET"  id="search_form" action="/Sample00/MainServlet">
-		<input type="text" name="search_keyword" id="search_box">
+		<input type="text" placeholder="検索キーワードを入力" name="search_keyword" id="search_box">
 		<button type="submit" class="search_button" ><i class="fas fa-search"></i></button>
 	</form>
 	<p></p>
