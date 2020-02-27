@@ -42,40 +42,45 @@ public class SampleDAO implements Serializable{
 // }
 //	}
 	public static ArrayList<Article> RequestTable(String catego) {
+		String sql;
 		//返り値用変数準備
 		ArrayList<Article> articleData = new ArrayList<Article>();
 
 		//SQL文作成
-			String sql =" select * from articles where category=?";
+		//検索内容がallの場合、新着５記事を取り出す
+		if (catego.equals("all")) {
+			sql = " select TOP 5 * from articles order by date";
+		} else {
+			sql = " select * from articles where category=?";
 			//接続＆return
-			try  {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection conn = DriverManager.getConnection(URL,USER,PASS);
-				PreparedStatement stt = conn.prepareStatement(sql);
-				stt.setString(1, catego);
-				// データベースに対する処理
-				ResultSet rs = stt.executeQuery();
-				while(rs.next()) {
-					//ヒットした数だけリストに格納
+		}
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(URL, USER, PASS);
+			PreparedStatement stt = conn.prepareStatement(sql);
+			stt.setString(1, catego);
+			// データベースに対する処理
+			ResultSet rs = stt.executeQuery();
+			while (rs.next()) {
+				//ヒットした数だけリストに格納
 
-					int id = rs.getInt(1);
-					String url = rs.getString(2);
-					String category = rs.getString(3);
-					String title = rs.getString(4);
-					String caption = rs.getString(5);
-					String userName = rs.getString(6);
-					String tag = rs.getString(7);
-					Date date = rs.getDate(8);
-					int access = rs.getInt(9);
-					articleData.add(new Article(id, url, category,title,caption,userName,tag,date, access));
-				}
-				return articleData;
+				int id = rs.getInt(1);
+				String url = rs.getString(2);
+				String category = rs.getString(3);
+				String title = rs.getString(4);
+				String caption = rs.getString(5);
+				String userName = rs.getString(6);
+				String tag = rs.getString(7);
+				Date date = rs.getDate(8);
+				int access = rs.getInt(9);
+				articleData.add(new Article(id, url, category, title, caption, userName, tag, date, access));
+			}
+			return articleData;
 
-
-				} catch (SQLException | ClassNotFoundException e){
-				     e.printStackTrace();
-				     return null;
-				}
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public static ArrayList<Article> SearchTable(String searchWord) {
 		//返り値用変数 用意

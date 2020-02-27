@@ -36,6 +36,7 @@ public class MainServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String keyWord = request.getParameter("search_keyword");
 		String category = request.getParameter("search_category");
+		String all = (String)request.getAttribute("search_all");
 		//jspからどちらの検索リクエストがきたかチェック
 		if (category != null) {
 			//jspから受け取ったカテゴリに該当する記事データを探してもらう

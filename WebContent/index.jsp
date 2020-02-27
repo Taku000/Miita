@@ -1,8 +1,11 @@
+<%@page import="model.PickoutArticle"%>
+<%@page import="org.eclipse.jdt.internal.compiler.batch.Main"%>
 <%@ page import="javax.naming.directory.SearchResult"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="model.Article"%>
 <%@ page import="servlet.MainServlet"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="javax.servlet.RequestDispatcher"%>
 
 <!-- 記事リストを取得、nullかどうかで表示分岐 -->
 <%
@@ -62,9 +65,11 @@
 		<!-- 記事リストのスコープに何か入っていたら、並べて表示 -->
 		<%
 			if (articleList == null) {
+				//入っていなかった場合、新着5記事の取得
+			 articleList = PickoutArticle.CategorySearch("all");
 		%>
 		<%
-			} else {
+		} else {
 		%>
 			<%
 				for (int i = 0; i < (size = articleList.size()); i++) {
