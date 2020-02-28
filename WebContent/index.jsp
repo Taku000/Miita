@@ -27,11 +27,44 @@
 <title>テストページ</title>
 </head>
 
-<body>
+<body onLoad="regist_category()">
 	<header>
 		<div id="head_bar">ロゴ</div>
 		<div id="register_area">
-			<button class="regist_button">登録</button>
+			<!-- ここからモーダルウィンドウ -->
+			<div id="modal-content">
+				<!-- モーダルウィンドウのコンテンツ開始 -->
+				<form name="regist_article" method="GET" action="check.html">
+				<div class="regist_title">Qiita記事登録画面</div>
+
+				<div class="URL">
+						URL：
+					<input type="text"  name="regist_url" class="URL_text"  placeholder="登録したい記事のURLを入力"></input>
+				</div>
+				<p></p>
+				<div class="category">
+					カテゴリ:
+					<select name="category1" class="category1" onChange="regist_category()"　>
+						<option value="kaihatu" selected>開発</option>
+						<option value="koutiku">構築</option>
+						<option value="DB">DB</option>
+						<option value="other">その他</option>
+					</select>
+					<select name="category2" class="category2">
+
+					</select>
+				</div>
+				<p></p>
+				<div class="pass">
+					パス:
+					<input type="password" name="regist_pass" class="regist_pass" size="3" ></input>
+				</div>
+				<input type="submit" class="regist_button" value="登録">
+				</form>
+				<div id="modal-close" class="button-link">閉じる</div>
+				<!-- モーダルウィンドウのコンテンツ終了 -->
+			</div>
+			<button  type="button"  id="modal-open" class="regist_modal">登録</button>
 		</div>
 	</header>
 	<!-- キーワード検索機能 -->
@@ -106,5 +139,7 @@
 			}
 			%>
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="js/regist.js"></script>
 </body>
 </html>
