@@ -49,16 +49,19 @@ public class SampleDAO implements Serializable{
 		//SQL文作成
 		//検索内容がallの場合、新着５記事を取り出す
 		if (catego.equals("all")) {
-			sql = " select TOP 5 * from articles order by date";
+			sql = " select * from articles order by date limit 5";
 		} else {
 			sql = " select * from articles where category=?";
+
 			//接続＆return
 		}
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			PreparedStatement stt = conn.prepareStatement(sql);
-			stt.setString(1, catego);
+			if (sql.contains("?")) {
+				stt.setString(1, catego);
+			}
 			// データベースに対する処理
 			ResultSet rs = stt.executeQuery();
 			while (rs.next()) {

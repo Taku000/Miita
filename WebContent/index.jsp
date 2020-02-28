@@ -7,7 +7,7 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="javax.servlet.RequestDispatcher"%>
 
-<!-- 記事リストを取得、nullかどうかで表示分岐 -->
+<!-- 記事リストを取得 -->
 <%
 	ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
 /* 並べ替え機能の条件保持用 */
@@ -36,23 +36,23 @@
 	</header>
 	<!-- キーワード検索機能 -->
 
-	<form method="GET"  id="search_form" action="/Sample00/MainServlet">
+	<form method="GET"  id="search_form" action="MainServlet">
 		<input type="text" placeholder="検索キーワードを入力" name="search_keyword" id="search_box">
 		<button type="submit" class="search_button" ><i class="fas fa-search"></i></button>
 	</form>
 	<p></p>
 	<!-- カテゴリ検索機能 -->
 	<!-- valueで検索するカテゴリを送信 -->
-	<form method="GET" class="category_button"  action="/Sample00/MainServlet">
+	<form method="GET" class="category_button"  action="MainServlet">
 		<button type="submit" class="java_buttton" name=search_category value="Java">Java</button>
 	</form>
-	<form method="GET" class="category_button" action="/Sample00/MainServlet">
+	<form method="GET" class="category_button" action="MainServlet">
 		<button type="submit" class="Linux_buttton" name=search_category value="Linux">Linux</button>
 	</form>
 	<div id="contents_area">
 	<!-- 並べ替え機能 -->
 	<!-- セレクトボックスで選択した条件をボタンで送信 -->
-		<form method="POST" action="/Sample00/MainServlet">
+		<form method="POST" action="MainServlet">
 				<select name ="sort" class="sort_box">
 					<option value="new"<%= "new".equals(sortWord) ? " selected=\"selected\"" : "" %> >新着順</option>
 					<option value="old"<%= "old".equals(sortWord) ? " selected=\"selected\"" : "" %>>投稿順</option>
@@ -67,12 +67,13 @@
 			if (articleList == null) {
 				//入っていなかった場合、新着5記事の取得
 			 articleList = PickoutArticle.CategorySearch("all");
+			 session.setAttribute("ARTICLE_LIST", articleList);
 		%>
 		<%
-		} else {
+			}
 		%>
 			<%
-				for (int i = 0; i < (size = articleList.size()); i++) {
+			for (int i = 0; i < (size = articleList.size()); i++) {
 			%>
 			<div id="contents_box">
                 <img src="./img/<%=articleList.get(i).category%>.png" id="icon" >
@@ -104,10 +105,6 @@
 			<%
 			}
 			%>
-
-		<%
-			}
-		%>
 	</div>
 </body>
 </html>

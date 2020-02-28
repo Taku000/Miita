@@ -83,5 +83,9 @@ public class Article implements Serializable{
 		 this.access = access;
 
 	}
+	public int compareTo(Article date2) {
+		// TODO 自動生成されたメソッド・スタブ
+		return 0;
+	}
 
 }
