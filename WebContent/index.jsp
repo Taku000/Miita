@@ -81,10 +81,10 @@
 					<div id="article_text">
 						<div  id="article1">
 							<div class="title"><%=articleList.get(i).title%>
+								<a href= "<%=articleList.get(i).url%>"></a>
 							</div>
 							<div class="caption"><%=articleList.get(i).caption%>
 							</div>
-							<a href= "<%=articleList.get(i).url%>"></a>
 						</div>
 						<div  id="article2">
 							<div class="author"><%=articleList.get(i).userName%>
