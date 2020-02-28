@@ -1,5 +1,4 @@
 $(function(){
-
 	//モーダルウィンドウを出現させるクリックイベント
 	$("#modal-open").click( function(){
 
@@ -87,3 +86,22 @@ $(function(){
 				select2.options[0] = new Option("その他","other");
             }
 		}
+//パス入力をミスした場合、モーダルでアラート表示したい
+window.onload = function popAlert() {
+	var popup = document.getElementById('js_miss_popup');
+	if(!popup) return;
+	popup.classList.add('is-show');
+
+	var blackBg = document.getElementById('js-black-bg');
+	var closeBtn = document.getElementById('miss_js_close_btn');
+
+	closePopUp(blackBg);
+	closePopUp(closeBtn);
+
+	function closePopUp(elem) {
+		if(!elem) return;
+		elem.addEventListener('click', function popAlert() {
+		popup.classList.remove('is-show');
+		})
+	}
+}

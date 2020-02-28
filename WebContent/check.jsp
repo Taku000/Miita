@@ -4,7 +4,8 @@
 <%@ page import ="java.util.ArrayList"%>
 
 <%
-  ArrayList<Article> article = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
+	ArrayList<Article> article = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
+	request.setCharacterEncoding("UTF-8");
 %>
 
 <!DOCTYPE html>
@@ -15,10 +16,12 @@
 </head>
 <body>
 <div>
-移動したよ
-<%  if (article !=null){%>
-入ってるよ
-<% }%>
+<%String regist_url = request.getParameter("regist_url"); %>
+<%= regist_url %>
+<%String category = request.getParameter("category2"); %>
+<%= category %>
+<%String pass = request.getParameter("regist_pass");%>
+<%=!(pass.equals("mgt")) %>
 </div>
 </body>
 </html>

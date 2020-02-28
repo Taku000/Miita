@@ -12,7 +12,7 @@
 	ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
 /* 並べ替え機能の条件保持用 */
 	String sortWord = (String) request.getAttribute("SORT_CONDITION");
-
+	String missCheck = (String) request.getAttribute("miss_pass");
 	int size;
 %>
 
@@ -34,17 +34,17 @@
 			<!-- ここからモーダルウィンドウ -->
 			<div id="modal-content">
 				<!-- モーダルウィンドウのコンテンツ開始 -->
-				<form name="regist_article" method="GET" action="check.html">
+				<form name="regist_article" method="post" action="RegisterServlet">
 				<div class="regist_title">Qiita記事登録画面</div>
 
 				<div class="URL">
-						URL：
+				URL:
 					<input type="text"  name="regist_url" class="URL_text"  placeholder="登録したい記事のURLを入力"></input>
 				</div>
 				<p></p>
 				<div class="category">
-					カテゴリ:
-					<select name="category1" class="category1" onChange="regist_category()"　>
+				カテゴリ:
+					<select name="category1" class="category1" >
 						<option value="kaihatu" selected>開発</option>
 						<option value="koutiku">構築</option>
 						<option value="DB">DB</option>
@@ -56,7 +56,7 @@
 				</div>
 				<p></p>
 				<div class="pass">
-					パス:
+				削除パス:
 					<input type="password" name="regist_pass" class="regist_pass" size="3" ></input>
 				</div>
 				<input type="submit" class="regist_button" value="登録">
@@ -139,6 +139,26 @@
 			}
 			%>
 	</div>
+	<!-- パスワードの入力ミスがあったら -->
+	<%
+			if (missCheck != null ) {
+	%>
+			<%
+				if(missCheck.equals("miss")){
+			%>
+				<div class="miss_popup" id="js_miss_popup">
+				  <div class="miss_popup_inner">
+				    <div class="miss_close_btn" id="miss_js_close_btn"><i class="fas fa-times"></i></div>
+				    <div class="miss_alert">パスワードをミスりましたね？</div>
+				  </div>
+				  <div class="black-background" id="js-black-bg"></div>
+				</div>
+			<%
+			}
+			%>
+		<%
+			}
+		%>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="js/regist.js"></script>
 </body>
