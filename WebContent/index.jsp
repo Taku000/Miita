@@ -27,7 +27,7 @@
 <title>テストページ</title>
 </head>
 
-<body onLoad="regist_category()">
+<body >
 	<header>
 		<div id="head_bar">ロゴ</div>
 		<div id="register_area">

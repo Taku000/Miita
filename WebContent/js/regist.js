@@ -1,4 +1,4 @@
-$(function(){
+$(window).bind('load', function(){
 	//モーダルウィンドウを出現させるクリックイベント
 	$("#modal-open").click( function(){
 
@@ -54,9 +54,9 @@ $(function(){
 
 		}
 
-	} ) ;
+	});
 //登録画面のカテゴリ選択の能動的変化
-	function regist_category()
+ window.addEventListener('load',function regist_category()
 		{
 		var select1 = regist_article.category1; //変数select1を宣言
 		var select2 = regist_article.category2; //変数select2を宣言
@@ -85,9 +85,9 @@ $(function(){
             {
 				select2.options[0] = new Option("その他","other");
             }
-		}
+		});
 //パス入力をミスした場合、モーダルでアラート表示したい
-window.onload = function popAlert() {
+window.addEventListener('load',function popAlert(){
 	var popup = document.getElementById('js_miss_popup');
 	if(!popup) return;
 	popup.classList.add('is-show');
@@ -101,7 +101,7 @@ window.onload = function popAlert() {
 	function closePopUp(elem) {
 		if(!elem) return;
 		elem.addEventListener('click', function popAlert() {
-		popup.classList.remove('is-show');
-		})
+		popup.classList.remove('is-show')
+		}
 	}
 }
