@@ -49,21 +49,7 @@ public class PickoutArticle implements Serializable {
 //			articleData = GetContent(urlString);
 //			article.add(articleData);
 
-	//URL切り取るメソッド
-	public static String cutOutURL(String url) {
-		String fullURL = url;
-		String itemsId;
-		String id;
-		//受け取ったURLをitems以降の文字列に切り取り
-		if (fullURL.contains("items/")) {
-			itemsId = fullURL.substring(fullURL.indexOf("items/"));
-			id = itemsId.substring(6);
-		} else {
-			itemsId = fullURL.substring(fullURL.indexOf("private/"));
-			id = itemsId.substring(8);
-		}
-		return id;
-	}
+
 
 	//記事のリンクを取得するメソッド
 	public static Article getContent(String urlString) {
