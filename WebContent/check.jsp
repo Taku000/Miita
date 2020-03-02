@@ -16,11 +16,11 @@
 </head>
 <body>
 <div>
-<%String regist_url = request.getParameter("regist_url"); %>
+<%String regist_url = (String) request.getAttribute("regist_url"); %>
 <%= regist_url %>
-<%String category = request.getParameter("category2"); %>
+<%String category = (String) request.getAttribute("category2"); %>
 <%= category %>
-<%String pass = request.getParameter("regist_pass");%>
+<%String pass = (String) request.getAttribute("regist_pass");%>
 <%=!(pass.equals("mgt")) %>
 </div>
 </body>

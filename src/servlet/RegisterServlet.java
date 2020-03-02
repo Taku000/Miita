@@ -40,11 +40,14 @@ public class RegisterServlet extends HttpServlet {
 		String registUrl = request.getParameter("regist_url");
 		String registCategry = request.getParameter("category2");
 		String pass = request.getParameter("regist_pass");
-		if(!(pass.equals("mgt"))) {
-			request.setAttribute("miss_pass", "miss");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		if(pass.equals("mgt")) {
+			request.setAttribute("regist_url",registUrl);
+			request.setAttribute("category2",registCategry);
+			request.setAttribute("regist_pass",pass);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("check.jsp");
 			dispatcher.forward(request, response);
 		}else {
+			request.setAttribute("miss_pass", "miss");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}

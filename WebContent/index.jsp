@@ -45,7 +45,8 @@
 				<div class="category">
 				カテゴリ:
 					<select name="category1" class="category1" >
-						<option value="kaihatu" selected>開発</option>
+						<option  disabled value=""selected>登録カテゴリを選択</option>
+						<option value="kaihatu">開発</option>
 						<option value="koutiku">構築</option>
 						<option value="DB">DB</option>
 						<option value="other">その他</option>

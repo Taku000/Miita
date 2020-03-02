@@ -41,9 +41,11 @@
 }
 
 #modal-close{
-    margin-right: 5%;
+	display:inline-block;
+    margin-left: 90%;
+    margin-right: 0;
     text-align: right;
-}
+    }
 
 .button-link {
 	color: rgb(7, 7, 8) ;
@@ -74,11 +76,12 @@
 .category1{
     display: inline-block;
    border: solid 1px black;
+
 }
 .category2{
     display: inline-block;
     border: solid 1px black;
-    width:auto;
+
 
 }
 .pass{
