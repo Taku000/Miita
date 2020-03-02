@@ -39,14 +39,14 @@ public class MainServlet extends HttpServlet {
 		//jspからどちらの検索リクエストがきたかチェック
 		if (category != null) {
 			//jspから受け取ったカテゴリに該当する記事データを探してもらう
-			ArrayList<Article> articleList = PickoutArticle.CategorySearch(category);
+			ArrayList<Article> articleList = PickoutArticle.categorySearch(category);
 			HttpSession session = request.getSession();
 			session.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}else if (keyWord != null) {
 			//jspから受け取ったキーワードを含む記事データを探してもらう
-			ArrayList<Article> articleList = PickoutArticle.KeyWordSearch(keyWord);
+			ArrayList<Article> articleList = PickoutArticle.keyWordSearch(keyWord);
 			HttpSession session = request.getSession();
 			session.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
@@ -65,7 +65,7 @@ public class MainServlet extends HttpServlet {
 		String sortWord = request.getParameter("sort");
 		ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
 		//条件と記事のリストを載せてSortArticlesメソッドを呼び出す
-		articleList = Sort.SortArticles(articleList, sortWord);
+		articleList = Sort.sortArticles(articleList, sortWord);
 		request.setAttribute("SORT_CONDITION", sortWord);
 		//並べ替えたリストをセッションスコープに上書きしてindex,jspに
 		session.setAttribute("ARTICLE_LIST", articleList);

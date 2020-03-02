@@ -17,22 +17,22 @@ public class PickoutArticle implements Serializable {
 	//成形したjsonデータを一旦収納するインスタンス
 
 	//カテゴリ検索用メソッド
-	public static ArrayList<Article> CategorySearch(String category) {
+	public static ArrayList<Article> categorySearch(String category) {
 		//		記事の情報をDBから貰う
-		ArrayList<Article> articleData = SampleDAO.RequestTable(category);
+		ArrayList<Article> articleData = SampleDAO.requestTable(category);
 		ArrayList<Article> articleList = new ArrayList<Article>();
-		articleList = Sort.SortArticles(articleData,"new");
+		articleList = Sort.sortArticles(articleData,"new");
 		if (articleList == null) {
 			return null;
 		}
 		return articleList;
 	}
 	//キーワード検索用メソッド
-	public static ArrayList<Article> KeyWordSearch(String keyWord){
+	public static ArrayList<Article> keyWordSearch(String keyWord){
 
-		ArrayList<Article> articleData = SampleDAO.SearchTable(keyWord);
+		ArrayList<Article> articleData = SampleDAO.searchTable(keyWord);
 		ArrayList<Article> articleList = new ArrayList<Article>();
-		articleList = Sort.SortArticles(articleData,"new");
+		articleList = Sort.sortArticles(articleData,"new");
 		if (articleList == null) {
 			return null;
 		}
@@ -50,7 +50,7 @@ public class PickoutArticle implements Serializable {
 //			article.add(articleData);
 
 	//URL切り取るメソッド
-	public static String CutOutURL(String url) {
+	public static String cutOutURL(String url) {
 		String fullURL = url;
 		String itemsId;
 		String id;
@@ -66,7 +66,7 @@ public class PickoutArticle implements Serializable {
 	}
 
 	//記事のリンクを取得するメソッド
-	public static Article GetContent(String urlString) {
+	public static Article getContent(String urlString) {
 		Article jsonArticle = new Article();
 
 		String script = "";

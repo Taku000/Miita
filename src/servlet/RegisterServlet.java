@@ -37,11 +37,11 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String registUrl = request.getParameter("regist_url");
+		String registURL = request.getParameter("regist_url");
 		String registCategry = request.getParameter("category2");
 		String pass = request.getParameter("regist_pass");
 		if(pass.equals("mgt")) {
-			request.setAttribute("regist_url",registUrl);
+			request.setAttribute("regist_url",registURL);
 			request.setAttribute("category2",registCategry);
 			request.setAttribute("regist_pass",pass);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("check.jsp");

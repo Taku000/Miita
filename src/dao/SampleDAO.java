@@ -41,7 +41,7 @@ public class SampleDAO implements Serializable{
 //    e.printStackTrace();
 // }
 //	}
-	public static ArrayList<Article> RequestTable(String catego) {
+	public static ArrayList<Article> requestTable(String catego) {
 		String sql;
 		//返り値用変数準備
 		ArrayList<Article> articleData = new ArrayList<Article>();
@@ -85,7 +85,7 @@ public class SampleDAO implements Serializable{
 			return null;
 		}
 	}
-	public static ArrayList<Article> SearchTable(String searchWord) {
+	public static ArrayList<Article> searchTable(String searchWord) {
 		//返り値用変数 用意
 		ArrayList<Article> articleData = new ArrayList<Article>();
 		//重複記事を格納しないために用意
