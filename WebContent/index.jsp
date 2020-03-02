@@ -27,7 +27,7 @@
 <title>テストページ</title>
 </head>
 
-<body >
+<body>
 	<header>
 		<div id="head_bar">ロゴ</div>
 		<div id="register_area">
@@ -146,7 +146,8 @@
 			<%
 				if(missCheck.equals("miss")){
 			%>
-				<div class="miss_popup" id="js_miss_popup">
+
+				 <div class="miss_popup" id="js_miss_popup">
 				  <div class="miss_popup_inner">
 				    <div class="miss_close_btn" id="miss_js_close_btn"><i class="fas fa-times"></i></div>
 				    <div class="miss_alert">パスワードをミスりましたね？</div>
@@ -160,6 +161,6 @@
 			}
 		%>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="js/regist.js"></script>
+	<script type="text/javascript" src="js/regist.js"></script>
 </body>
 </html>

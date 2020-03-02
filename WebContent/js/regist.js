@@ -26,9 +26,9 @@ $(window).bind('load', function(){
 				//[#modal-overlay]を削除する
 				$('#modal-overlay').remove() ;
 
-			} ) ;
+			});
 
-		} ) ;
+		});
 
 	} ) ;
 
@@ -50,17 +50,18 @@ $(window).bind('load', function(){
 			var ch = $( "#modal-content" ).outerHeight();
 
 			//センタリングを実行する
-			$( "#modal-content" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
+			$( "#modal-content" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"});
 
 		}
+})
 
-	});
-//登録画面のカテゴリ選択の能動的変化
- window.addEventListener('load',function regist_category()
-		{
 		var select1 = regist_article.category1; //変数select1を宣言
 		var select2 = regist_article.category2; //変数select2を宣言
-		select2.options.length = 0; // 選択肢の数がそれぞれに異なる場合、これが重要
+
+		//登録画面のカテゴリ選択の能動的変化
+select1.addEventListener("change",function changeSelect1()
+		{
+			select2.options.length = 0; // 選択肢の数がそれぞれに異なる場合、これが重要
 			if (select1.options[select1.selectedIndex].value == "kaihatu")
             {
                 select2.options[0] = new Option("Java","Java");
@@ -85,7 +86,7 @@ $(window).bind('load', function(){
             {
 				select2.options[0] = new Option("その他","other");
             }
-		});
+		})
 //パス入力をミスした場合、モーダルでアラート表示したい
 window.addEventListener('load',function popAlert(){
 	var popup = document.getElementById('js_miss_popup');
@@ -102,6 +103,7 @@ window.addEventListener('load',function popAlert(){
 		if(!elem) return;
 		elem.addEventListener('click', function popAlert() {
 		popup.classList.remove('is-show')
-		}
+		location.href="index.jsp";
+		});
 	}
-}
+})
