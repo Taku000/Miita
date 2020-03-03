@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.RegistArticle;
+
 /**
  * Servlet implementation class RegisterServlet
  */
@@ -41,9 +43,8 @@ public class RegisterServlet extends HttpServlet {
 		String registCategry = request.getParameter("category2");
 		String pass = request.getParameter("regist_pass");
 		if(pass.equals("mgt")) {
-			request.setAttribute("regist_url",registURL);
-			request.setAttribute("category2",registCategry);
-			request.setAttribute("regist_pass",pass);
+			//記事登録クラスを呼びだす
+			boolean registerSuccess = RegistArticle.register(registURL,registCategry);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("check.jsp");
 			dispatcher.forward(request, response);
 		}else {

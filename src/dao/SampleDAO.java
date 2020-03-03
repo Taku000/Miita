@@ -13,6 +13,7 @@ import java.util.LinkedHashSet;
 import model.Article;
 
 public class SampleDAO implements Serializable{
+	static Connection conn = null;
 	//DB接続用定数
 	 static String DATABASE_NAME = "miita_proto";
 	 static String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
@@ -83,7 +84,16 @@ public class SampleDAO implements Serializable{
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
+		}finally {
+			try{
+			    if (conn != null){
+			      conn.close();
+			    }
+			  }catch (SQLException e){
+				  e.printStackTrace();
+			  }
 		}
+
 	}
 	public static ArrayList<Article> searchTable(String searchWord) {
 		//返り値用変数 用意
@@ -149,9 +159,85 @@ public class SampleDAO implements Serializable{
 			return null;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-
+		}finally {
+			try{
+			    if (conn != null){
+			      conn.close();
+			    }
+			  }catch (SQLException e){
+				  e.printStackTrace();
+			  }
 		}
 		return articleData;
 
+	}
+	//登録時重複記事チェックメソッド
+	public static String checkDuplication(Article registData) {
+		//データベースの中に既に同じURLが存在してないかチェックターン
+		String checkResult;
+		String sql;
+				//SQL文作成
+				sql = "select url  from  articles ;";
+
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection conn = DriverManager.getConnection(URL, USER, PASS);
+					PreparedStatement stt = conn.prepareStatement(sql);
+					// データベースに対する処理
+					ResultSet rs = stt.executeQuery();
+					while (rs.next()) {
+						String url = rs.getString(2);
+						if (registData.getUrl().equals(url)) {
+							return checkResult = "Duplication";
+						}
+					}
+					return checkResult = "noDuplication";
+
+				} catch (SQLException | ClassNotFoundException e) {
+					e.printStackTrace();
+					return checkResult = "error";
+				}finally {
+					try{
+					    if (conn != null){
+					      conn.close();
+					    }
+					  }catch (SQLException e){
+						  e.printStackTrace();
+
+					  }
+				}
+	}
+
+
+	//記事登録メソッド
+	public static boolean registerTable (Article registData){
+
+		String sql;
+		//SQL文作成
+		sql = " INSERT INTO ARTICLES(url,category,title,caption,user_name,tag,date)"
+				+ "VALUES" + "(" + "'" + registData.getUrl()
+				+ "','" + registData.getCategory() + "','" + registData.getTitle()
+				+ "','" + registData.getCaption() + "','" + registData.getUserName()
+				+ "','" + registData.getTag() + "','" + registData.getDate() + "'" + ");";
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(URL, USER, PASS);
+			PreparedStatement stt = conn.prepareStatement(sql);
+			// データベースに対する処理
+			stt.executeQuery();
+			return true;
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+			try{
+			    if (conn != null){
+			      conn.close();
+			    }
+			  }catch (SQLException e){
+				  e.printStackTrace();
+			  }
+		}
 	}
 }

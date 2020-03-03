@@ -11,7 +11,9 @@ public class Article implements Serializable{
 	public String caption;
 	public String userName;
 	public String tag;
+	public String stringDate;
 	public Date date;
+
 	public int access;
 
 
@@ -57,11 +59,11 @@ public class Article implements Serializable{
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	public Date getDate() {
-		return date;
+	public String getStringDate() {
+		return stringDate;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setStringDate(String stringDate) {
+		this.stringDate = stringDate;
 	}
 	public int getAccess() {
 		return access;
@@ -69,8 +71,28 @@ public class Article implements Serializable{
 	public void setAccess(int access) {
 		this.access = access;
 	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public Article() {}
+	//登録用インスタンス作成コンストラクタ
+	public Article(int id, String url,String category,String title, String caption, String userName, String tag, String stringDate, int access ) {
+		this.id = id;
+		 this.url = url;
+		 this.category = category;
+		 this.title = title;
+		 this.caption = caption;
+		 this.userName = userName;
+		 this.tag = tag;
+		 this.stringDate = stringDate;
+		 this.access = access;
+
+	}
+	//表示用インスタンス作成コンストラクタ
 	public Article(int id, String url,String category,String title, String caption, String userName, String tag, Date date, int access ) {
 		this.id = id;
 		 this.url = url;
