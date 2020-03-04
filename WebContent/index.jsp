@@ -100,7 +100,7 @@
 		<%
 			if (articleList == null) {
 				//入っていなかった場合、新着5記事の取得
-			 articleList = PickoutArticle.CategorySearch("all");
+			 articleList = PickoutArticle.categorySearch("all");
 			 session.setAttribute("ARTICLE_LIST", articleList);
 		%>
 		<%

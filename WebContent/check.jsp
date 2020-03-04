@@ -16,12 +16,8 @@
 </head>
 <body>
 <div>
-<%String regist_url = (String) request.getAttribute("regist_url"); %>
-<%= regist_url %>
-<%String category = (String) request.getAttribute("category2"); %>
-<%= category %>
-<%String pass = (String) request.getAttribute("regist_pass");%>
-<%=!(pass.equals("mgt")) %>
+<%String result = (String) request.getAttribute("REGISTER_RESULT"); %>
+<%= result %>
 </div>
 </body>
 </html>

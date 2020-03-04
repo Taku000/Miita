@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.RegistArticle;
+import model.ArticleRegister;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -42,9 +42,11 @@ public class RegisterServlet extends HttpServlet {
 		String registURL = request.getParameter("regist_url");
 		String registCategry = request.getParameter("category2");
 		String pass = request.getParameter("regist_pass");
+		String registerResult = null;
 		if(pass.equals("mgt")) {
 			//記事登録クラスを呼びだす
-			boolean registerSuccess = RegistArticle.register(registURL,registCategry);
+			registerResult = ArticleRegister.register(registURL,registCategry);
+			request.setAttribute("REGISTER_RESULT", registerResult);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("check.jsp");
 			dispatcher.forward(request, response);
 		}else {

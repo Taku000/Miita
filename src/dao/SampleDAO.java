@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -186,15 +187,18 @@ public class SampleDAO implements Serializable{
 					// データベースに対する処理
 					ResultSet rs = stt.executeQuery();
 					while (rs.next()) {
-						String url = rs.getString(2);
+						//getString(1)==URL
+						String url = rs.getString(1);
 						if (registData.getUrl().equals(url)) {
-							return checkResult = "Duplication";
+							System.out.println("URLが重複してるよ");
+							return checkResult = "duplication";
 						}
 					}
+					System.out.println("URLは重複してないよ");
 					return checkResult = "noDuplication";
-
-				} catch (SQLException | ClassNotFoundException e) {
+				}catch(SQLException | ClassNotFoundException e) {
 					e.printStackTrace();
+					System.out.println("MySQLとのやり取りでエラーが出たよ");
 					return checkResult = "error";
 				}finally {
 					try{
@@ -203,7 +207,7 @@ public class SampleDAO implements Serializable{
 					    }
 					  }catch (SQLException e){
 						  e.printStackTrace();
-
+						  return checkResult = "error";
 					  }
 				}
 	}
@@ -218,14 +222,14 @@ public class SampleDAO implements Serializable{
 				+ "VALUES" + "(" + "'" + registData.getUrl()
 				+ "','" + registData.getCategory() + "','" + registData.getTitle()
 				+ "','" + registData.getCaption() + "','" + registData.getUserName()
-				+ "','" + registData.getTag() + "','" + registData.getDate() + "'" + ");";
-
+				+ "','" + registData.getTag() + "','" + registData.getStringDate() + "'" + ");";
+		System.out.println();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			PreparedStatement stt = conn.prepareStatement(sql);
+			Statement statement = conn.createStatement();
 			// データベースに対する処理
-			stt.executeQuery();
+			statement.executeUpdate(sql);
 			return true;
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
