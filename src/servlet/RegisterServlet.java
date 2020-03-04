@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.ArticleRegister;
 
@@ -46,11 +47,28 @@ public class RegisterServlet extends HttpServlet {
 		if(pass.equals("mgt")) {
 			//記事登録クラスを呼びだす
 			registerResult = ArticleRegister.register(registURL,registCategry);
-			request.setAttribute("REGISTER_RESULT", registerResult);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("check.jsp");
-			dispatcher.forward(request, response);
+			//結果によって分岐
+			if (registerResult.equals("success")) {
+				HttpSession session = request.getSession();
+				session.setAttribute("ARTICLE_LIST", null);
+				request.removeAttribute("regist_url");
+				request.removeAttribute("category2");
+				request.removeAttribute("regist_pass");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher.forward(request, response);
+			}else {
+				request.setAttribute("REGISTER_RESULT", registerResult);
+				request.removeAttribute("regist_url");
+				request.removeAttribute("category2");
+				request.removeAttribute("regist_pass");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("check.jsp");
+				dispatcher.forward(request, response);
+				}
 		}else {
-			request.setAttribute("miss_pass", "miss");
+			request.setAttribute("MISS_PASS", "miss");
+			request.removeAttribute("regist_url");
+			request.removeAttribute("category2");
+			request.removeAttribute("regist_pass");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}

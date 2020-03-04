@@ -23,26 +23,7 @@ public class SampleDAO implements Serializable{
 	 static String USER = "root";
 	 static String PASS = "";
 
-//	public static void connectDAO() {
-//		DB接続一連の流れ
-		//DB接続用定数
-//		 String DATABASE_NAME = "miita";
-//		 String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
-//		 String URL = "jdbc:mySQL://localhost/" + DATABASE_NAME+PROPATIES;
-//		//DB接続用・ユーザ定数
-//		 String USER = "root";
-//		 String PASS = "";
-//			try  {
-//				Class.forName("com.mysql.cj.jdbc.Driver");
-//				Connection conn = DriverManager.getConnection(URL,USER,PASS);
-//				// データベースに対する処理
-//				System.out.println("イエス");
-//
-//
-// } catch (SQLException | ClassNotFoundException e){
-//    e.printStackTrace();
-// }
-//	}
+
 	public static ArrayList<Article> requestTable(String catego) {
 		String sql;
 		//返り値用変数準備
@@ -51,9 +32,9 @@ public class SampleDAO implements Serializable{
 		//SQL文作成
 		//検索内容がallの場合、新着５記事を取り出す
 		if (catego.equals("all")) {
-			sql = " select * from articles order by date limit 5";
+			sql = " select * from articles order by date desc limit 5;";
 		} else {
-			sql = " select * from articles where category=?";
+			sql = " select * from articles where category=?;";
 
 			//接続＆return
 		}

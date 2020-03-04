@@ -36,16 +36,16 @@ public class MainServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String keyWord = request.getParameter("search_keyword");
 		String category = request.getParameter("search_category");
-		//jspからどちらの検索リクエストがきたかチェック
+		//どちらの検索リクエストがきたかチェック
 		if (category != null) {
-			//jspから受け取ったカテゴリに該当する記事データを探してもらう
+			//受け取ったカテゴリに該当する記事データを探してもらう
 			ArrayList<Article> articleList = PickoutArticle.categorySearch(category);
 			HttpSession session = request.getSession();
 			session.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}else if (keyWord != null) {
-			//jspから受け取ったキーワードを含む記事データを探してもらう
+			//受け取ったキーワードを含む記事データを探してもらう
 			ArrayList<Article> articleList = PickoutArticle.keyWordSearch(keyWord);
 			HttpSession session = request.getSession();
 			session.setAttribute("ARTICLE_LIST", articleList);

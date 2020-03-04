@@ -12,7 +12,8 @@
 	ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
 /* 並べ替え機能の条件保持用 */
 	String sortWord = (String) request.getAttribute("SORT_CONDITION");
-	String missCheck = (String) request.getAttribute("miss_pass");
+	String missCheck = (String) request.getAttribute("MISS_PASS");
+	String registerError = (String) request.getAttribute("REGISTER_ERROR");
 	int size;
 %>
 
@@ -98,8 +99,8 @@
 		<!-- 記事の表示機能 -->
 		<!-- 記事リストのスコープに何か入っていたら、並べて表示 -->
 		<%
-			if (articleList == null) {
-				//入っていなかった場合、新着5記事の取得
+			if (articleList == null){
+			//入っていなかった場合、新着5記事の取得
 			 articleList = PickoutArticle.categorySearch("all");
 			 session.setAttribute("ARTICLE_LIST", articleList);
 		%>
@@ -140,6 +141,26 @@
 			}
 			%>
 	</div>
+	<!-- 登録時のエラーが発生したら -->
+	<%
+			if (registerError != null ) {
+	%>
+			<%
+				if(registerError.equals("miss")){
+			%>
+				 <div class="miss_popup" id="js_miss_popup">
+				  <div class="miss_popup_inner">
+				    <div class="miss_close_btn" id="miss_js_close_btn"><i class="fas fa-times"></i></div>
+				    <div class="miss_alert">登録時にエラーが発生しました</div>
+				  </div>
+				  <div class="black-background" id="js-black-bg"></div>
+				</div>
+			<%
+			}
+			%>
+		<%
+			}
+		%>
 	<!-- パスワードの入力ミスがあったら -->
 	<%
 			if (missCheck != null ) {
