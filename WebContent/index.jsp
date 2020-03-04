@@ -163,12 +163,11 @@
 		%>
 	<!-- パスワードの入力ミスがあったら -->
 	<%
-			if (missCheck != null ) {
+			if (missCheck != null ){
 	%>
 			<%
 				if(missCheck.equals("miss")){
 			%>
-
 				 <div class="miss_popup" id="js_miss_popup">
 				  <div class="miss_popup_inner">
 				    <div class="miss_close_btn" id="miss_js_close_btn"><i class="fas fa-times"></i></div>
@@ -182,6 +181,10 @@
 		<%
 			}
 		%>
+		<%! public void jspDestroy(){
+      System.out.println("jspDestroy()");
+      }
+  %>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="js/regist.js"></script>
 </body>
