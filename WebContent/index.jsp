@@ -9,7 +9,7 @@
 
 <!-- 記事リストを取得 -->
 <%
-	ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
+ ArrayList<Article> articleList = (ArrayList<Article>)session.getAttribute("ARTICLE_LIST");
 /* 並べ替え機能の条件保持用 */
 	String sortWord = (String) request.getAttribute("SORT_CONDITION");
 	String missCheck = (String) request.getAttribute("MISS_PASS");
@@ -87,13 +87,13 @@
 	<div id="contents_area">
 	<!-- 並べ替え機能 -->
 	<!-- セレクトボックスで選択した条件をボタンで送信 -->
-		<form method="POST" action="MainServlet">
+		<form method="GET" action="MainServlet">
 				<select name ="sort" class="sort_box">
-					<option value="new"<%= "new".equals(sortWord) ? " selected=\"selected\"" : "" %> >新着順</option>
-					<option value="old"<%= "old".equals(sortWord) ? " selected=\"selected\"" : "" %>>投稿順</option>
-					<option value="view"<%= "view".equals(sortWord) ? " selected=\"selected\"" : "" %>>閲覧数順</option>
+					<option value="新着順"<%= "新着順".equals(sortWord) ? " selected=\"selected\"" : "" %> >新着順</option>
+					<option value="投稿順"<%= "投稿順".equals(sortWord) ? " selected=\"selected\"" : "" %>>投稿順</option>
+					<option value="閲覧数順"<%= "閲覧数順".equals(sortWord) ? " selected=\"selected\"" : "" %>>閲覧数順</option>
 				</select>
-			<button type="submit" class ="sort_button" name ="sort" >並べ替え
+			<button type="submit" class ="sort_button" name ="" >並べ替え
 			</button>
 		</form>
 		<!-- 記事の表示機能 -->
@@ -101,8 +101,8 @@
 		<%
 			if (articleList == null){
 			//入っていなかった場合、新着5記事の取得
-			 articleList = PickoutArticle.categorySearch("all");
-			 session.setAttribute("ARTICLE_LIST", articleList);
+			articleList = PickoutArticle.categorySearch("all");
+			session.setAttribute("ARTICLE_LIST", articleList);
 		%>
 		<%
 			}
@@ -181,10 +181,6 @@
 		<%
 			}
 		%>
-		<%! public void jspDestroy(){
-      System.out.println("jspDestroy()");
-      }
-  %>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="js/regist.js"></script>
 </body>

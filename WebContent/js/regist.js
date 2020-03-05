@@ -89,7 +89,7 @@ select1.addEventListener("change",function changeSelect1()
 		})
 //パス入力をミスした場合、モーダルでアラート表示したい
 window.addEventListener('load',function popAlert(){
-	var popup = document.getElementById('js_miss_popup');
+	var popup = document.getElementById('js_regist_popup');
 	if(!popup) return;
 	popup.classList.add('is-show');
 

@@ -294,7 +294,7 @@
    margin-bottom: 0;
 }
 
-.miss_popup {
+.regist_popup {
     position: fixed;
     left: 0;
     top: 0;
@@ -305,12 +305,12 @@
     visibility: hidden;
     transition: .6s;
 }
-.miss_popup.is-show {
+.regist_popup.is-show {
     opacity: 1;
     visibility: visible;
 }
 
-.miss_popup_inner {
+.regist_popup_inner {
     position: absolute;
     left: 50%;
     top: 50%;

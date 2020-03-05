@@ -21,7 +21,7 @@ public class PickoutArticle implements Serializable {
 		//		記事の情報をDBから貰う
 		ArrayList<Article> articleData = SampleDAO.requestTable(category);
 		ArrayList<Article> articleList = new ArrayList<Article>();
-		articleList = Sort.sortArticles(articleData,"new");
+		articleList = Sort.sortArticles(articleData,"新着順");
 		if (articleList == null) {
 			return null;
 		}
@@ -32,7 +32,7 @@ public class PickoutArticle implements Serializable {
 
 		ArrayList<Article> articleData = SampleDAO.searchTable(keyWord);
 		ArrayList<Article> articleList = new ArrayList<Article>();
-		articleList = Sort.sortArticles(articleData,"new");
+		articleList = Sort.sortArticles(articleData,"新着順");
 		if (articleList == null) {
 			return null;
 		}
