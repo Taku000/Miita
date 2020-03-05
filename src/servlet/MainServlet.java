@@ -33,16 +33,29 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//受け取る情報の入れ物用意
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
 		String keyWord = request.getParameter("search_keyword");
 		String category = request.getParameter("search_category");
 		String sortWord = request.getParameter("sort");
-		//どちらの検索リクエストがきたかチェック
-		if (category != null) {
+		//どういう検索リクエストがきたかチェック
+		if (category != null && sortWord != null) {
+			//カテゴリ検索の後、並び替え依頼
+			articleList = PickoutArticle.categorySearch(category);
+			articleList = Sort.sortArticles(articleList, sortWord);
+			//並べ替えたリストをセッションスコープに上書きしてindex,jspに
+			request.setAttribute("NOW_SEARCH_CATEGORY", category);
+			request.setAttribute("SORT_CONDITION", sortWord);
+			session.setAttribute("ARTICLE_LIST", articleList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
+		}else if (category != null) {
 			//受け取ったカテゴリに該当する記事データを探してもらう
 			articleList = PickoutArticle.categorySearch(category);
+			request.setAttribute("NOW_SEARCH_CATEGORY", category);
+			request.setAttribute("SORT_CONDITION", sortWord);
 			session.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);

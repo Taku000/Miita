@@ -13,6 +13,7 @@
 /* 並べ替え機能の条件保持用 */
 	String sortWord = (String) request.getAttribute("SORT_CONDITION");
 	String missCheck = (String) request.getAttribute("MISS_PASS");
+	String nowSearchCategory = (String) request.getAttribute("NOW_SEARCH_CATEGORY");
 	String registerError = (String) request.getAttribute("REGISTER_ERROR");
 	int size;
 %>
@@ -79,10 +80,10 @@
 	<!-- カテゴリ検索機能 -->
 	<!-- valueで検索するカテゴリを送信 -->
 	<form method="GET" class="category_button"  action="MainServlet">
-		<button type="submit" class="java_buttton" name=search_category value="Java">Java</button>
+		<button type="submit" class="java_buttton" name=search_category value="Java" onclick= "assignmentCategory(Java)">Java</button>
 	</form>
 	<form method="GET" class="category_button" action="MainServlet">
-		<button type="submit" class="Linux_buttton" name=search_category value="Linux">Linux</button>
+		<button type="submit" class="Linux_buttton" name=search_category value="Linux" onclick= "assignmentCategory(Linux)">Linux</button>
 	</form>
 	<div id="contents_area">
 	<!-- 並べ替え機能 -->
@@ -93,8 +94,17 @@
 					<option value="投稿順"<%= "投稿順".equals(sortWord) ? " selected=\"selected\"" : "" %>>投稿順</option>
 					<option value="閲覧数順"<%= "閲覧数順".equals(sortWord) ? " selected=\"selected\"" : "" %>>閲覧数順</option>
 				</select>
-			<button type="submit" class ="sort_button" name ="" >並べ替え
-			</button>
+			<%
+			if (nowSearchCategory != null){
+			%>
+				<select name ="search_category">
+					<option  selected  value=<%= nowSearchCategory %>>
+				</select>
+			<%
+			}
+			%>
+				<button type="submit" class ="sort_button" name ="" >並べ替え
+				</button>
 		</form>
 		<!-- 記事の表示機能 -->
 		<!-- 記事リストのスコープに何か入っていたら、並べて表示 -->

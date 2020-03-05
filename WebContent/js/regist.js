@@ -107,3 +107,7 @@ window.addEventListener('load',function popAlert(){
 		});
 	}
 })
+
+function assignmentCategory(category){
+	nowSearchCategory = category ;
+}
