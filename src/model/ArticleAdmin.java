@@ -7,49 +7,51 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dao.SampleDAO;
+import dao.MiitaDAO;
 
-public class PickoutArticle implements Serializable {
-	//成形したjsonデータを一旦収納するインスタンス
+//記事表示関係管理クラス
+public class ArticleAdmin implements Serializable {
+	static ArrayList<Article> articleList = new ArrayList<Article>();
 
 	//カテゴリ検索用メソッド
 	public static ArrayList<Article> categorySearch(String category) {
-		//		記事の情報をDBから貰う
-		ArrayList<Article> articleData = SampleDAO.requestTable(category);
-		ArrayList<Article> articleList = new ArrayList<Article>();
-		articleList = Sort.sortArticles(articleData,"新着順");
+
+		//記事の情報をDBから貰う
+		articleList = ArticleAdmin.sortArticles((MiitaDAO.tableSearchCategory(category)),"新着順");
 		if (articleList == null) {
 			return null;
 		}
 		return articleList;
 	}
+
 	//キーワード検索用メソッド
-	public static ArrayList<Article> keyWordSearch(String keyWord){
+	public static ArrayList<Article> keywordSearch(String keyWord){
 
-		ArrayList<Article> articleData = SampleDAO.searchTable(keyWord);
-		ArrayList<Article> articleList = new ArrayList<Article>();
-		articleList = Sort.sortArticles(articleData,"新着順");
+		//記事の情報をDBから貰う
+		articleList = ArticleAdmin.sortArticles((MiitaDAO.tableSearchKeyword(keyWord)),"新着順");
 		if (articleList == null) {
 			return null;
 		}
 		return articleList;
 	}
-//		//		貰った情報を表示できる形に加工する
-//		//記事数カウント変数
-//		int size = articleData.size();
-//		//predataのListの数だけarticleListにadd
-//		for (int i = 0; i < size; i++) {
-//			String qiitaId = CutOutURL(articleData.get(i).url);
-//			String urlString = "https://qiita.com/api/v2/items/" + qiitaId;
-//			Article articleData = new Article();
-//			articleData = GetContent(urlString);
-//			article.add(articleData);
 
 
+	public static ArrayList<Article> sortArticles(ArrayList<Article> listData, String sortWord){
+		if (sortWord.equals("新着順")) {
+			Collections.sort(listData, new NewIdComparator());
+		}else if (sortWord.equals("投稿順") ) {
+			Collections.sort(listData, new OldIdComparator());
+		}else if(sortWord.equals("閲覧数順")) {
+			Collections.sort(listData, new ViewComparator());
+		}
+		//並べ替えた記事リストを返却
+		return listData;
+	}
 
 	//記事のリンクを取得するメソッド
 	public static Article getContent(String urlString) {

@@ -64,12 +64,14 @@ select1.addEventListener("change",function changeSelect1()
 			select2.options.length = 0; // 選択肢の数がそれぞれに異なる場合、これが重要
 			if (select1.options[select1.selectedIndex].value == "kaihatu")
             {
+				select2.style.border = '1px solid black';
                 select2.options[0] = new Option("Java","Java");
                 select2.options[1] = new Option("Java Silver","Java Silver");
 				select2.options[2] = new Option("JSP/Servlet","JSP/Servlet");
 			}
 			else if (select1.options[select1.selectedIndex].value == "koutiku")
             {
+				select2.style.border = '1px solid black';
                 select2.options[0] = new Option("Linux","Linux");
                 select2.options[1] = new Option("CCNA","CCNA");
                 select2.options[2] = new Option("AWS","AWS");
@@ -77,6 +79,7 @@ select1.addEventListener("change",function changeSelect1()
 			}
 			else if (select1.options[select1.selectedIndex].value == "DB")
             {
+				select2.style.border = '1px solid black';
 				select2.options[0] = new Option("SQL基本文法","SQL_bunpou");
 				select2.options[1] = new Option("MySQL","MySQL");
 				select2.options[2] = new Option("H2","H2");
@@ -84,30 +87,19 @@ select1.addEventListener("change",function changeSelect1()
 			}
 			else if (select1.options[select1.selectedIndex].value == "other")
             {
+				select2.style.border = '1px solid black';
 				select2.options[0] = new Option("その他","other");
             }
 		})
-//パス入力をミスした場合、モーダルでアラート表示したい
-window.addEventListener('load',function popAlert(){
-	var popup = document.getElementById('js_regist_popup');
-	if(!popup) return;
-	popup.classList.add('is-show');
+//登録に失敗した場合、モーダルでアラート表示したい
 
-	var blackBg = document.getElementById('js-black-bg');
-	var closeBtn = document.getElementById('miss_js_close_btn');
-
-	closePopUp(blackBg);
-	closePopUp(closeBtn);
-
-	function closePopUp(elem) {
-		if(!elem) return;
-		elem.addEventListener('click', function popAlert() {
-		popup.classList.remove('is-show')
-		location.href="index.jsp";
-		});
-	}
-})
-
-function assignmentCategory(category){
-	nowSearchCategory = category ;
-}
+$(window).bind('load',function popAlert(){
+    $('.js-modal-open').on('click',function(){
+        $('.js-modal').fadeIn();
+        return false;
+    });
+    $('.js-modal-close').on('click',function(){
+        $('.js-modal').fadeOut();
+        return false;
+    });
+});

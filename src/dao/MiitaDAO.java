@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
 
 import model.Article;
 
-public class SampleDAO implements Serializable{
+public class MiitaDAO implements Serializable{
 	static Connection conn = null;
 	//DB接続用定数
 	 static String DATABASE_NAME = "miita_proto";
@@ -24,14 +24,15 @@ public class SampleDAO implements Serializable{
 	 static String PASS = "";
 
 
-	public static ArrayList<Article> requestTable(String catego) {
-		String sql;
-		//返り値用変数準備
-		ArrayList<Article> articleData = new ArrayList<Article>();
+	public static ArrayList<Article> tableSearchCategory(String categoryWord) {
 
-		//SQL文作成
+		String sql;
+
+		//記事のリスト用意
+		ArrayList<Article> articleList = new ArrayList<Article>();
+
 		//検索内容がallの場合、新着５記事を取り出す
-		if (catego.equals("all")) {
+		if (categoryWord.equals("all")) {
 			sql = " select * from articles order by date desc limit 5;";
 		} else {
 			sql = " select * from articles where category=?;";
@@ -43,7 +44,7 @@ public class SampleDAO implements Serializable{
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			PreparedStatement stt = conn.prepareStatement(sql);
 			if (sql.contains("?")) {
-				stt.setString(1, catego);
+				stt.setString(1, categoryWord);
 			}
 			// データベースに対する処理
 			ResultSet rs = stt.executeQuery();
@@ -59,9 +60,9 @@ public class SampleDAO implements Serializable{
 				String tag = rs.getString(7);
 				Date date = rs.getDate(8);
 				int access = rs.getInt(9);
-				articleData.add(new Article(id, url, category, title, caption, userName, tag, date, access));
+				articleList.add(new Article(id, url, category, title, caption, userName, tag, date, access));
 			}
-			return articleData;
+			return articleList;
 
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -77,12 +78,15 @@ public class SampleDAO implements Serializable{
 		}
 
 	}
-	public static ArrayList<Article> searchTable(String searchWord) {
-		//返り値用変数 用意
-		ArrayList<Article> articleData = new ArrayList<Article>();
+	public static ArrayList<Article> tableSearchKeyword(String searchWord) {
+
+		//記事のリスト用意
+		ArrayList<Article> articleList = new ArrayList<Article>();
+
 		//重複記事を格納しないために用意
 		boolean result = true;
 		LinkedHashSet<Integer> hs = new LinkedHashSet<Integer>();
+
 		//接続＆return
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -128,14 +132,14 @@ public class SampleDAO implements Serializable{
 
 					//trueならそのまま記事をリストに格納
 					if (result == true) {
-						articleData.add(article);
+						articleList.add(article);
 						//falseならcontinue
 					} else {
 						continue;
 					}
 				}
 			}
-			return articleData;
+			return articleList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -150,7 +154,7 @@ public class SampleDAO implements Serializable{
 				  e.printStackTrace();
 			  }
 		}
-		return articleData;
+		return articleList;
 
 	}
 	//登録時重複記事チェックメソッド

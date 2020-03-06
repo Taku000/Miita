@@ -57,15 +57,15 @@ public class RegisterServlet extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
 			}else {
-				request.setAttribute("REGISTER_RESULT", registerResult);
+				request.setAttribute("REGISTER_ERROR", registerResult);
 				request.removeAttribute("regist_url");
 				request.removeAttribute("category2");
 				request.removeAttribute("regist_pass");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("check.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 				dispatcher.forward(request, response);
 				}
 		}else {
-			request.setAttribute("MISS_PASS", "miss");
+			request.setAttribute("REGISTER_ERROR", "miss");
 			request.removeAttribute("regist_url");
 			request.removeAttribute("category2");
 			request.removeAttribute("regist_pass");

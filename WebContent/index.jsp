@@ -1,9 +1,9 @@
-<%@page import="model.PickoutArticle"%>
+<%@page import="model.ArticleAdmin"%>
 <%@page import="org.eclipse.jdt.internal.compiler.batch.Main"%>
 <%@ page import="javax.naming.directory.SearchResult"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="model.Article"%>
-<%@ page import="servlet.MainServlet"%>
+<%@ page import="servlet.Home"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="javax.servlet.RequestDispatcher"%>
 
@@ -11,7 +11,6 @@
 <%
  ArrayList<Article> articleList = (ArrayList<Article>)session.getAttribute("ARTICLE_LIST");
 /* 並べ替え機能の条件保持用 */
-	String missCheck = (String) request.getAttribute("MISS_PASS");
 	String searchKeyWordCondition = (String) request.getAttribute("SEARCH_KEYWORD_CONDITION") ;
 	String searchCategoryCondition = (String) request.getAttribute("SEARCH_CATEGORY_CONDITION");
 	String sortWord = (String) request.getAttribute("SORT_CONDITION");
@@ -73,43 +72,45 @@
 	</header>
 	<!-- キーワード検索機能 -->
 
-	<form method="GET"  id="search_form" action="MainServlet">
+	<form method="GET"  id="search_form" action="Home">
 		<input type="text" placeholder="検索キーワードを入力" name="search_keyword" id="search_box">
 		<button type="submit" class="search_button" ><i class="fas fa-search"></i></button>
 	</form>
-	<p></p>
-	<!-- カテゴリ検索機能 -->
+
+
+		<!-- カテゴリ検索機能 -->
 	<!-- valueで検索するカテゴリを送信 -->
-	<form method="GET" class="category_button"  action="MainServlet">
+	<form method="GET" class="category_button"  action="Home">
 		<button type="submit" class="java_buttton" name="search_category" value="Java" onclick= "assignmentCategory(Java)">Java</button>
 	</form>
-	<form method="GET" class="category_button" action="MainServlet">
+	<form method="GET" class="category_button" action="Home">
 		<button type="submit" class="Linux_buttton" name="search_category" value="Linux" onclick= "assignmentCategory(Linux)">Linux</button>
 	</form>
 	<div id="contents_area">
+
 	<!-- 並べ替え機能 -->
 	<!-- セレクトボックスで選択した条件をボタンで送信 -->
-		<form method="GET" action="MainServlet">
+		<form method="GET" action="Home">
 				<select name ="sort" class="sort_box">
 					<option value="新着順"<%= "新着順".equals(sortWord) ? " selected=\"selected\"" : "" %> >新着順</option>
 					<option value="投稿順"<%= "投稿順".equals(sortWord) ? " selected=\"selected\"" : "" %>>投稿順</option>
 					<option value="閲覧数順"<%= "閲覧数順".equals(sortWord) ? " selected=\"selected\"" : "" %>>閲覧数順</option>
 				</select>
 				<%
-				if(searchKeyWordCondition!=null){
-				%>
-				<select name ="search_keyword" hidden="hidden">
-					<option value="<%=searchKeyWordCondition %>" selected ></option>
-				</select>
-				<%
-				}if(searchCategoryCondition!=null){
-				%>
-				<select name ="search_category" hidden="hidden">
-					<option value="<%=searchCategoryCondition %>" selected ></option>
-				</select>
-				<%
-				}
-				%>
+				if(searchCategoryCondition!=null){
+					%>
+					<select name ="search_category" >
+						<option value="<%=searchCategoryCondition %>" selected ></option>
+					</select>
+					<%
+				}if(searchKeyWordCondition!=null){
+					%>
+					<select name ="search_keyword" >
+						<option value="<%=searchKeyWordCondition %>" selected ></option>
+					</select>
+					<%
+					}
+					%>
 				<button type="submit" class ="sort_button"  name ="">並べ替え</button>
 		</form>
 		<!-- 記事の表示機能 -->
@@ -117,7 +118,7 @@
 		<%
 			if (articleList == null){
 			//入っていなかった場合、新着5記事の取得
-			articleList = PickoutArticle.categorySearch("all");
+			articleList = ArticleAdmin.categorySearch("all");
 			session.setAttribute("ARTICLE_LIST", articleList);
 		%>
 		<%
@@ -157,42 +158,26 @@
 			}
 			%>
 	</div>
-	<!-- 登録時のエラーが発生したら -->
+	<!-- 登録時ミスがあれば -->
 	<%
-			if (registerError != null ) {
+			if (registerError != null ){
 	%>
 			<%
 				if(registerError.equals("miss")){
 			%>
-				 <div class="miss_popup" id="js_miss_popup">
-				  <div class="miss_popup_inner">
-				    <div class="miss_close_btn" id="miss_js_close_btn"><i class="fas fa-times"></i></div>
-				    <div class="miss_alert">登録時にエラーが発生しました</div>
-				  </div>
-				  <div class="black-background" id="js-black-bg"></div>
+			popAlert()
+				 <div class="modal js-modal">
+					  <div class="modal__bg js-modal-close">
+					  </div>
+					   <div class="modal__content">
+						   <p><%= registerError %></p>
+						   <a class="js-modal-close" href="">閉じる</a>
+					  </div>
+					  <div class="black-background" id="js-black-bg">
+					  </div>
 				</div>
 			<%
-			}
-			%>
-		<%
-			}
-		%>
-	<!-- パスワードの入力ミスがあったら -->
-	<%
-			if (missCheck != null ){
-	%>
-			<%
-				if(missCheck.equals("miss")){
-			%>
-				 <div class="miss_popup" id="js_miss_popup">
-				  <div class="miss_popup_inner">
-				    <div class="miss_close_btn" id="miss_js_close_btn"><i class="fas fa-times"></i></div>
-				    <div class="miss_alert">パスワードをミスりましたね？</div>
-				  </div>
-				  <div class="black-background" id="js-black-bg"></div>
-				</div>
-			<%
-			}
+				}
 			%>
 		<%
 			}
