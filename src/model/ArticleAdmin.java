@@ -1,17 +1,9 @@
 package model;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.MiitaDAO;
 
@@ -23,7 +15,7 @@ public class ArticleAdmin implements Serializable {
 	public static ArrayList<Article> categorySearch(String category) {
 
 		//記事の情報をDBから貰う
-		articleList = ArticleAdmin.sortArticles((MiitaDAO.tableSearchCategory(category)),"新着順");
+		articleList = ArticleAdmin.sortArticles((MiitaDAO.tableSearchCategory(category)), "新着順");
 		if (articleList == null) {
 			return null;
 		}
@@ -31,18 +23,17 @@ public class ArticleAdmin implements Serializable {
 	}
 
 	//キーワード検索用メソッド
-	public static ArrayList<Article> keywordSearch(String keyWord){
+	public static ArrayList<Article> keywordSearch(String keyWord) {
 
 		//記事の情報をDBから貰う
-		articleList = ArticleAdmin.sortArticles((MiitaDAO.tableSearchKeyword(keyWord)),"新着順");
+		articleList = ArticleAdmin.sortArticles((MiitaDAO.tableSearchKeyword(keyWord)), "新着順");
 		if (articleList == null) {
 			return null;
 		}
 		return articleList;
 	}
 
-
-	public static ArrayList<Article> sortArticles(ArrayList<Article> articleList, String sortWord){
+	public static ArrayList<Article> sortArticles(ArrayList<Article> articleList, String sortWord) {
 		if (sortWord.equals("新着順")) {
 			Collections.sort(articleList, new Comparator<Article>() {
 				public int compare(Article date1, Article date2) {
@@ -50,14 +41,14 @@ public class ArticleAdmin implements Serializable {
 				}
 			});
 
-		}else if (sortWord.equals("投稿順") ) {
+		} else if (sortWord.equals("投稿順")) {
 			Collections.sort(articleList, new Comparator<Article>() {
 				public int compare(Article date1, Article date2) {
 					return date1.date.compareTo(date2.date);
 				}
 			});
 
-		}else if(sortWord.equals("閲覧数順")) {
+		} else if (sortWord.equals("閲覧数順")) {
 			Collections.sort(articleList, new Comparator<Article>() {
 				public int compare(Article access1, Article access2) {
 					return access1.access < access2.access ? 1 : -1;
@@ -68,9 +59,7 @@ public class ArticleAdmin implements Serializable {
 		return articleList;
 	}
 
-
-
-	//記事のリンクを取得するメソッド
+	/*//記事のリンクを取得するメソッド
 	public static Article getContent(String urlString) {
 		Article jsonArticle = new Article();
 
@@ -107,18 +96,18 @@ public class ArticleAdmin implements Serializable {
 			String authorName = node.get("user").get("github_login_name").asText();
 			String date = (node.get("updated_at").asText()).substring(0, 10).replace("\"", "");
 			String urlLink = node.get("url").asText();
-//
-//			jsonArticle.title = title;
-//			jsonArticle.caption = caption;
-//			jsonArticle.userIcon = userIcon;
-//			jsonArticle.author = authorName;
-//			jsonArticle.date = date;
-//			jsonArticle.url = urlLink;
+	//
+	//			jsonArticle.title = title;
+	//			jsonArticle.caption = caption;
+	//			jsonArticle.userIcon = userIcon;
+	//			jsonArticle.author = authorName;
+	//			jsonArticle.date = date;
+	//			jsonArticle.url = urlLink;
 
 		} catch (Exception e) {
 			return null;
 		}
 		return jsonArticle;
 	}
-
+	*/
 }

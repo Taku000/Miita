@@ -20,25 +20,27 @@ import model.ArticleAdmin;
 @WebServlet("/Home")
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Home() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public Home() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		//受け取る情報の入れ物用意
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 
 		//記事表示用リスト
-		ArrayList<Article> articleList =
-				(ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
+		ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
 
 		String sortWord = request.getParameter("sort"); //並べ替え条件
 		String category = request.getParameter("search_category"); //カテゴリ検索
@@ -49,13 +51,13 @@ public class Home extends HttpServlet {
 			articleList = ArticleAdmin.keywordSearch(keyWord);
 			request.setAttribute("SEARCH_KEYWORD_CONDITION", keyWord);//URLリクエストパラメーター用
 
-		}else if(category != null) {//カテゴリ検索のみ
+		} else if (category != null) {//カテゴリ検索のみ
 			articleList = ArticleAdmin.categorySearch(category);
 			request.setAttribute("SEARCH_CATEGORY_CONDITION", category);
 
 		}
 
-		if(sortWord != null){//並べ替え処理
+		if (sortWord != null) {//並べ替え処理
 			articleList = ArticleAdmin.sortArticles(articleList, sortWord);
 			request.setAttribute("SORT_CONDITION", sortWord);
 		}
@@ -70,7 +72,8 @@ public class Home extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 	}
 

@@ -13,16 +13,15 @@ import java.util.LinkedHashSet;
 
 import model.Article;
 
-public class MiitaDAO implements Serializable{
+public class MiitaDAO implements Serializable {
 	static Connection conn = null;
 	//DB接続用定数
-	 static String DATABASE_NAME = "miita_proto";
-	 static String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
-	 static String URL = "jdbc:mySQL://localhost/" + DATABASE_NAME+PROPATIES;
+	static String DATABASE_NAME = "miita_proto";
+	static String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
+	static String URL = "jdbc:mySQL://localhost/" + DATABASE_NAME + PROPATIES;
 	//DB接続用・ユーザ定数
-	 static String USER = "root";
-	 static String PASS = "";
-
+	static String USER = "root";
+	static String PASS = "";
 
 	public static ArrayList<Article> tableSearchCategory(String categoryWord) {
 
@@ -67,17 +66,18 @@ public class MiitaDAO implements Serializable{
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
-		}finally {
-			try{
-			    if (conn != null){
-			      conn.close();
-			    }
-			  }catch (SQLException e){
-				  e.printStackTrace();
-			  }
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
+
 	public static ArrayList<Article> tableSearchKeyword(String searchWord) {
 
 		//記事のリスト用意
@@ -145,61 +145,61 @@ public class MiitaDAO implements Serializable{
 			return null;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}finally {
-			try{
-			    if (conn != null){
-			      conn.close();
-			    }
-			  }catch (SQLException e){
-				  e.printStackTrace();
-			  }
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return articleList;
 
 	}
+
 	//登録時重複記事チェックメソッド
 	public static String checkDuplication(Article registData) {
 		//データベースの中に既に同じURLが存在してないかチェックターン
 		String checkResult;
 		String sql;
-				//SQL文作成
-				sql = "select url  from  articles ;";
+		//SQL文作成
+		sql = "select url  from  articles ;";
 
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection conn = DriverManager.getConnection(URL, USER, PASS);
-					PreparedStatement stt = conn.prepareStatement(sql);
-					// データベースに対する処理
-					ResultSet rs = stt.executeQuery();
-					while (rs.next()) {
-						//getString(1)==URL
-						String url = rs.getString(1);
-						if (registData.getUrl().equals(url)) {
-							System.out.println("URLが重複してるよ");
-							return checkResult = "duplication";
-						}
-					}
-					System.out.println("URLは重複してないよ");
-					return checkResult = "noDuplication";
-				}catch(SQLException | ClassNotFoundException e) {
-					e.printStackTrace();
-					System.out.println("MySQLとのやり取りでエラーが出たよ");
-					return checkResult = "error";
-				}finally {
-					try{
-					    if (conn != null){
-					      conn.close();
-					    }
-					  }catch (SQLException e){
-						  e.printStackTrace();
-						  return checkResult = "error";
-					  }
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(URL, USER, PASS);
+			PreparedStatement stt = conn.prepareStatement(sql);
+			// データベースに対する処理
+			ResultSet rs = stt.executeQuery();
+			while (rs.next()) {
+				//getString(1)==URL
+				String url = rs.getString(1);
+				if (registData.getUrl().equals(url)) {
+					System.out.println("URLが重複してるよ");
+					return checkResult = "duplication";
 				}
+			}
+			System.out.println("URLは重複してないよ");
+			return checkResult = "noDuplication";
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("MySQLとのやり取りでエラーが出たよ");
+			return checkResult = "error";
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return checkResult = "error";
+			}
+		}
 	}
 
-
 	//記事登録メソッド
-	public static boolean registerTable (Article registData){
+	public static boolean registerTable(Article registData) {
 
 		String sql;
 		//SQL文作成
@@ -219,14 +219,14 @@ public class MiitaDAO implements Serializable{
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return false;
-		}finally {
-			try{
-			    if (conn != null){
-			      conn.close();
-			    }
-			  }catch (SQLException e){
-				  e.printStackTrace();
-			  }
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

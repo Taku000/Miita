@@ -12,45 +12,42 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.MiitaDAO;
 
-
-
 public class ArticleRegister {
-	public static String  register(String registUrl, String registCategory) {
+	public static String register(String registUrl, String registCategory) {
 		String result;
 		boolean successOrFailure = true;
 		//URLがQiitaの記事かどうかをチェック
 		if (registUrl.contains("qiita.com") &&
 				(registUrl.contains("items") ||
-						registUrl.contains("private")))
-		{
+						registUrl.contains("private"))) {
 			System.out.println("Qiitaの記事だから登録を続行するよ");
 			//URL切り取って記事idに成形
-			 String id = cutOutURL(registUrl);
+			String id = cutOutURL(registUrl);
 			//成形したidを使って記事データ取得
-			 Article registArticleData = connectionAPI(id);
-			 if (registArticleData == null) {
-				 System.out.println("記事が見つからないよ");
+			Article registArticleData = connectionAPI(id);
+			if (registArticleData == null) {
+				System.out.println("記事が見つからないよ");
 				return result = "notfound";
 			}
-			 //インスタンスにまだ入れていないデータ追加
-			 registArticleData.setUrl(registUrl);
-			 registArticleData.setCategory(registCategory);
-			 //アドレスの重複確認
-			 result = MiitaDAO.checkDuplication(registArticleData);
-			 if (result.equals("duplication")) {
+			//インスタンスにまだ入れていないデータ追加
+			registArticleData.setUrl(registUrl);
+			registArticleData.setCategory(registCategory);
+			//アドレスの重複確認
+			result = MiitaDAO.checkDuplication(registArticleData);
+			if (result.equals("duplication")) {
 				return result;
-			}else if (result.equals("error")) {
+			} else if (result.equals("error")) {
 				return result;
-			}//DAOに登録を依頼する
-			 successOrFailure = MiitaDAO.registerTable(registArticleData);
-			 if (successOrFailure == false) {
+			} //DAOに登録を依頼する
+			successOrFailure = MiitaDAO.registerTable(registArticleData);
+			if (successOrFailure == false) {
 				return result = "registFailure";
 			}
-			 System.out.println("記事の登録に成功したよ");
-			 return result ="success";
-		}else{
+			System.out.println("記事の登録に成功したよ");
+			return result = "success";
+		} else {
 			System.out.println("Qiitaの記事じゃないからindexに戻すよ");
-			return result ="notQiita";
+			return result = "notQiita";
 		}
 	}
 
@@ -61,13 +58,13 @@ public class ArticleRegister {
 		//受け取ったURLをcAPI用にid部分の文字列に切り取り
 		if (fullUrl.contains("items/")) {
 			id = fullUrl.substring(fullUrl.indexOf("items/"));
-			id = id .substring(5);
+			id = id.substring(5);
 		} else {
 			id = fullUrl.substring(fullUrl.indexOf("private/"));
-			id = id .substring(7);
+			id = id.substring(7);
 		}
 		if (id.contains("#")) {
-			return(id.substring(0,(id.lastIndexOf("#"))));
+			return (id.substring(0, (id.lastIndexOf("#"))));
 		}
 		return id;
 	}
@@ -107,7 +104,8 @@ public class ArticleRegister {
 			//必要なものを取り出す
 
 			String title = (node.get("title").asText());
-			String caption = (node.get("rendered_body").asText()).replaceAll("<.+?>", "").replaceAll("\n", ""). substring(0, 200);
+			String caption = (node.get("rendered_body").asText()).replaceAll("<.+?>", "").replaceAll("\n", "")
+					.substring(0, 200);
 			String userName = (node.get("user").get("id")).asText();
 			StringBuilder buff = new StringBuilder();
 			String tag;
@@ -126,7 +124,7 @@ public class ArticleRegister {
 		} catch (FileNotFoundException e) {
 			System.out.println("記事が見つかりませんよ");
 			return registArticleData = null;
-		}catch(Exception e) {
+		} catch (Exception e) {
 		}
 		return registArticleData;
 	}
