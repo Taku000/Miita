@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,17 +42,33 @@ public class ArticleAdmin implements Serializable {
 	}
 
 
-	public static ArrayList<Article> sortArticles(ArrayList<Article> listData, String sortWord){
+	public static ArrayList<Article> sortArticles(ArrayList<Article> articleList, String sortWord){
 		if (sortWord.equals("新着順")) {
-			Collections.sort(listData, new NewIdComparator());
+			Collections.sort(articleList, new Comparator<Article>() {
+				public int compare(Article date1, Article date2) {
+					return date2.date.compareTo(date1.date);
+				}
+			});
+
 		}else if (sortWord.equals("投稿順") ) {
-			Collections.sort(listData, new OldIdComparator());
+			Collections.sort(articleList, new Comparator<Article>() {
+				public int compare(Article date1, Article date2) {
+					return date1.date.compareTo(date2.date);
+				}
+			});
+
 		}else if(sortWord.equals("閲覧数順")) {
-			Collections.sort(listData, new ViewComparator());
+			Collections.sort(articleList, new Comparator<Article>() {
+				public int compare(Article access1, Article access2) {
+					return access1.access < access2.access ? 1 : -1;
+				}
+			});
 		}
 		//並べ替えた記事リストを返却
-		return listData;
+		return articleList;
 	}
+
+
 
 	//記事のリンクを取得するメソッド
 	public static Article getContent(String urlString) {

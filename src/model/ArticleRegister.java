@@ -10,7 +10,7 @@ import java.net.URL;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dao.SampleDAO;
+import dao.MiitaDAO;
 
 
 
@@ -36,13 +36,13 @@ public class ArticleRegister {
 			 registArticleData.setUrl(registUrl);
 			 registArticleData.setCategory(registCategory);
 			 //アドレスの重複確認
-			 result = SampleDAO.checkDuplication(registArticleData);
+			 result = MiitaDAO.checkDuplication(registArticleData);
 			 if (result.equals("duplication")) {
 				return result;
 			}else if (result.equals("error")) {
 				return result;
 			}//DAOに登録を依頼する
-			 successOrFailure = SampleDAO.registerTable(registArticleData);
+			 successOrFailure = MiitaDAO.registerTable(registArticleData);
 			 if (successOrFailure == false) {
 				return result = "registFailure";
 			}
