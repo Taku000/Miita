@@ -41,20 +41,29 @@ public class MainServlet extends HttpServlet {
 		String category = request.getParameter("search_category");
 		String sortWord = request.getParameter("sort");
 		//どういう検索リクエストがきたかチェック
-		if (category != null && sortWord != null) {
+		if (keyWord != null && sortWord != null) {
+			//キーワード検索の後、並べ替え依頼
+			articleList = PickoutArticle.keyWordSearch(keyWord);
+			articleList = Sort.sortArticles(articleList, sortWord);
+			request.setAttribute("SEARCH_KEYWORD_CONDITION", keyWord);
+			request.setAttribute("SORT_CONDITION", sortWord);
+			session.setAttribute("ARTICLE_LIST", articleList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
+		}else if (category != null && sortWord != null) {
 			//カテゴリ検索の後、並び替え依頼
 			articleList = PickoutArticle.categorySearch(category);
 			articleList = Sort.sortArticles(articleList, sortWord);
 			//並べ替えたリストをセッションスコープに上書きしてindex,jspに
-			request.setAttribute("NOW_SEARCH_CATEGORY", category);
 			request.setAttribute("SORT_CONDITION", sortWord);
+			request.setAttribute("SEARCH_CATEGORY_CONDITION", category);
 			session.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}else if (category != null) {
 			//受け取ったカテゴリに該当する記事データを探してもらう
 			articleList = PickoutArticle.categorySearch(category);
-			request.setAttribute("NOW_SEARCH_CATEGORY", category);
+			request.setAttribute("SEARCH_CATEGORY_CONDITION", category);
 			request.setAttribute("SORT_CONDITION", sortWord);
 			session.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
@@ -62,6 +71,7 @@ public class MainServlet extends HttpServlet {
 		}else if (keyWord != null) {
 			//受け取ったキーワードを含む記事データを探してもらう
 			articleList = PickoutArticle.keyWordSearch(keyWord);
+			request.setAttribute("SEARCH_KEYWORD_CONDITION", keyWord);
 			session.setAttribute("ARTICLE_LIST", articleList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
