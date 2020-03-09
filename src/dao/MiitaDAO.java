@@ -8,12 +8,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
 
 import model.Article;
 
 public class MiitaDAO implements Serializable {
+	//記事のリスト用意
+
+
+	static String sql;
+
 	static Connection conn = null;
 	//DB接続用定数
 	static String DATABASE_NAME = "miita_proto";
@@ -23,11 +29,8 @@ public class MiitaDAO implements Serializable {
 	static String USER = "root";
 	static String PASS = "";
 
+	//DBカテゴリ検索用メソッド
 	public static ArrayList<Article> tableSearchCategory(String categoryWord) {
-
-		String sql;
-
-		//記事のリスト用意
 		ArrayList<Article> articleList = new ArrayList<Article>();
 
 		//検索内容がallの場合、新着５記事を取り出す
@@ -35,7 +38,6 @@ public class MiitaDAO implements Serializable {
 			sql = " select * from articles order by date desc limit 5;";
 		} else {
 			sql = " select * from articles where category=?;";
-
 			//接続＆return
 		}
 		try {
@@ -47,8 +49,9 @@ public class MiitaDAO implements Serializable {
 			}
 			// データベースに対する処理
 			ResultSet rs = stt.executeQuery();
+
+			//ヒットした数だけリストに格納
 			while (rs.next()) {
-				//ヒットした数だけリストに格納
 
 				int id = rs.getInt(1);
 				String url = rs.getString(2);
@@ -59,6 +62,7 @@ public class MiitaDAO implements Serializable {
 				String tag = rs.getString(7);
 				Date date = rs.getDate(8);
 				int access = rs.getInt(9);
+
 				articleList.add(new Article(id, url, category, title, caption, userName, tag, date, access));
 			}
 			return articleList;
@@ -78,9 +82,8 @@ public class MiitaDAO implements Serializable {
 
 	}
 
+	//DBキーワード検索用メソッド
 	public static ArrayList<Article> tableSearchKeyword(String searchWord) {
-
-		//記事のリスト用意
 		ArrayList<Article> articleList = new ArrayList<Article>();
 
 		//重複記事を格納しないために用意
@@ -94,8 +97,10 @@ public class MiitaDAO implements Serializable {
 
 			//検索語句の作成
 			//全角スペースを半角スペースに変換、半角スペースで単語を区切る
-			String[] separateWord = searchWord.replaceAll("　", " ").split(" ", 0);
-			String sql = "select * from articles WHERE (category LIKE ?) "
+			ArrayList<String> wordList = new ArrayList<String>
+			(Arrays.asList(searchWord.replaceAll("　", " ").split(" ",0)));
+
+			sql = "select * from articles WHERE (category LIKE ?) "
 					+ "OR (title LIKE ?)"
 					+ "OR (user_name LIKE ?)"
 					+ "OR(caption LIKE ?)"
@@ -104,11 +109,11 @@ public class MiitaDAO implements Serializable {
 			PreparedStatement pStatement = conn.prepareStatement(sql);
 
 			//区切った単語の数だけ回す
-			for (int i = 0; i < separateWord.length; i++) {
+			for (int i = 0; i < wordList.size(); i++) {
 				// パラメータの数分回す(5つ)
 				for (int j = 0; j < 5; j++) {
 					int num = j + 1;
-					pStatement.setString(num, "%" + separateWord[i] + "%");
+					pStatement.setString(num, "%" + wordList.get(i) + "%");
 				}
 				ResultSet rs = pStatement.executeQuery();
 				while (rs.next()) {
@@ -140,6 +145,7 @@ public class MiitaDAO implements Serializable {
 				}
 			}
 			return articleList;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -155,14 +161,13 @@ public class MiitaDAO implements Serializable {
 			}
 		}
 		return articleList;
-
 	}
 
 	//登録時重複記事チェックメソッド
 	public static String checkDuplication(Article registData) {
 		//データベースの中に既に同じURLが存在してないかチェックターン
 		String checkResult;
-		String sql;
+
 		//SQL文作成
 		sql = "select url  from  articles ;";
 
@@ -174,6 +179,7 @@ public class MiitaDAO implements Serializable {
 			ResultSet rs = stt.executeQuery();
 			while (rs.next()) {
 				//getString(1)==URL
+
 				String url = rs.getString(1);
 				if (registData.getUrl().equals(url)) {
 					System.out.println("URLが重複してるよ");
@@ -201,14 +207,12 @@ public class MiitaDAO implements Serializable {
 	//記事登録メソッド
 	public static boolean registerTable(Article registData) {
 
-		String sql;
 		//SQL文作成
 		sql = " INSERT INTO ARTICLES(url,category,title,caption,user_name,tag,date)"
 				+ "VALUES" + "(" + "'" + registData.getUrl()
 				+ "','" + registData.getCategory() + "','" + registData.getTitle()
 				+ "','" + registData.getCaption() + "','" + registData.getUserName()
 				+ "','" + registData.getTag() + "','" + registData.getStringDate() + "'" + ");";
-		System.out.println();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);

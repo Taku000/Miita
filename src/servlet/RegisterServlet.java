@@ -51,27 +51,18 @@ public class RegisterServlet extends HttpServlet {
 			if (registerResult.equals("success")) {
 				HttpSession session = request.getSession();
 				session.setAttribute("ARTICLE_LIST", null);
-				request.removeAttribute("regist_url");
-				request.removeAttribute("category2");
-				request.removeAttribute("regist_pass");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-				dispatcher.forward(request, response);
 			}else {
 				request.setAttribute("REGISTER_ERROR", registerResult);
-				request.removeAttribute("regist_url");
-				request.removeAttribute("category2");
-				request.removeAttribute("regist_pass");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-				dispatcher.forward(request, response);
 				}
 		}else {
 			request.setAttribute("REGISTER_ERROR", "miss");
-			request.removeAttribute("regist_url");
-			request.removeAttribute("category2");
-			request.removeAttribute("regist_pass");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-			dispatcher.forward(request, response);
+
 		}
+		request.removeAttribute("regist_url");
+		request.removeAttribute("category2");
+		request.removeAttribute("regist_pass");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

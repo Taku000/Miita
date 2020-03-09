@@ -29,25 +29,38 @@ public class ArticleRegister {
 				System.out.println("記事が見つからないよ");
 				return result = "notfound";
 			}
+
 			//インスタンスにまだ入れていないデータ追加
+
 			registArticleData.setUrl(registUrl);
 			registArticleData.setCategory(registCategory);
+
 			//アドレスの重複確認
+
 			result = MiitaDAO.checkDuplication(registArticleData);
+
 			if (result.equals("duplication")) {
 				return result;
+
 			} else if (result.equals("error")) {
 				return result;
-			} //DAOに登録を依頼する
+
+			}
+			//DAOに登録を依頼する
+
 			successOrFailure = MiitaDAO.registerTable(registArticleData);
 			if (successOrFailure == false) {
 				return result = "registFailure";
+
 			}
 			System.out.println("記事の登録に成功したよ");
 			return result = "success";
+
 		} else {
+
 			System.out.println("Qiitaの記事じゃないからindexに戻すよ");
 			return result = "notQiita";
+
 		}
 	}
 

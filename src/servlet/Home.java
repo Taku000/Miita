@@ -14,24 +14,13 @@ import javax.servlet.http.HttpSession;
 import model.Article;
 import model.ArticleAdmin;
 
-/**
- * Servlet implementation class MainServlet
- */
 @WebServlet("/Home")
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public Home() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -63,6 +52,7 @@ public class Home extends HttpServlet {
 		}
 
 		//記事リストを上書きしてフォワード
+
 		session.setAttribute("ARTICLE_LIST", articleList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);

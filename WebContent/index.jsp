@@ -165,20 +165,28 @@
 			<%
 				if(registerError.equals("miss")){
 			%>
-			popAlert()
-				 <div class="modal js-modal">
-					  <div class="modal__bg js-modal-close">
-					  </div>
-					   <div class="modal__content">
-						   <p><%= registerError %></p>
-						   <a class="js-modal-close" href="">閉じる</a>
-					  </div>
-					  <div class="black-background" id="js-black-bg">
-					  </div>
+				<div class="popup" id="js-popup">
+				  <div class="popup-inner">
+				    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+				    <div class="popmessage">パスワードを間違えましたね</div>
+				  </div>
+				  <div class="black-background" id="js-black-bg"></div>
 				</div>
+			<%
+				}else if(registerError.equals("notQiita")){
+			%>
+				<div class="popup" id="js-popup">
+					  <div class="popup-inner">
+					    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+					    <div class="popmessage">Qiitaの記事じゃありませんよ</div>
+					  </div>
+					  <div class="black-background" id="js-black-bg"></div>
+				</div>
+
 			<%
 				}
 			%>
+
 		<%
 			}
 		%>

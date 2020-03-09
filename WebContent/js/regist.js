@@ -93,13 +93,21 @@ select1.addEventListener("change",function changeSelect1()
 		})
 //登録に失敗した場合、モーダルでアラート表示したい
 
-$(window).bind('load',function popAlert(){
-    $('.js-modal-open').on('click',function(){
-        $('.js-modal').fadeIn();
-        return false;
-    });
-    $('.js-modal-close').on('click',function(){
-        $('.js-modal').fadeOut();
-        return false;
-    });
-});
+window.onload = function() {
+	var popup = document.getElementById('js-popup');
+	if(!popup) return;
+	popup.classList.add('is-show');
+  
+	var blackBg = document.getElementById('js-black-bg');
+	var closeBtn = document.getElementById('js-close-btn');
+  
+	closePopUp(blackBg);
+	closePopUp(closeBtn);
+  
+	function closePopUp(elem) {
+	  if(!elem) return;
+	  elem.addEventListener('click', function() {
+		popup.classList.remove('is-show');
+	  })
+	}
+  }
