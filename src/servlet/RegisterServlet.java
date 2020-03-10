@@ -45,11 +45,13 @@ public class RegisterServlet extends HttpServlet {
 		String pass = request.getParameter("regist_pass");
 		String registerResult = null;
 
+		ArticleRegister aRegister = new ArticleRegister();
+
 
 		if(pass.equals("mgt") && registCategry != null) {
 
 			//記事登録クラスを呼びだす
-			registerResult = ArticleRegister.register(registURL,registCategry);
+			registerResult = aRegister.register(registURL,registCategry);
 
 			//結果によって分岐
 

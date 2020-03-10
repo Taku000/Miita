@@ -13,7 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.MiitaDAO;
 
 public class ArticleRegister {
-	public static String register(String registUrl, String registCategory) {
+	public  String register(String registUrl, String registCategory) {
+		//MiitaDAOのインスタンス作成
+		MiitaDAO mDao = new MiitaDAO();
+
+
 		String result;
 		boolean successOrFailure = true;
 		//URLがQiitaの記事かどうかをチェック
@@ -37,7 +41,7 @@ public class ArticleRegister {
 
 			//アドレスの重複確認
 
-			result = MiitaDAO.checkDuplication(registArticleData);
+			result = mDao.checkDuplication(registArticleData);
 
 			if (result.equals("duplication")) {
 				return result;
@@ -48,7 +52,7 @@ public class ArticleRegister {
 			}
 			//DAOに登録を依頼する
 
-			successOrFailure = MiitaDAO.registerTable(registArticleData);
+			successOrFailure = mDao.registerTable(registArticleData);
 			if (successOrFailure == false) {
 				return result = "registFailure";
 
@@ -66,7 +70,7 @@ public class ArticleRegister {
 	}
 
 	//URL切り取るメソッド
-	public static String cutOutURL(String registURL) {
+	public  String cutOutURL(String registURL) {
 		String fullUrl = registURL;
 		String id;
 		//受け取ったURLをcAPI用にid部分の文字列に切り取り
@@ -84,7 +88,7 @@ public class ArticleRegister {
 	}
 
 	//切り取り成形されたidを使ってAPI接続、記事のデータを取得するメソッド
-	public static Article connectionAPI(String id) {
+	public  Article connectionAPI(String id) {
 		String apiString = "https://qiita.com/api/v2/items/" + (id);
 		Article registArticleData = new Article();
 		String script = "";

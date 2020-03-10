@@ -4,17 +4,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Article implements Serializable{
-	public int id;
-	public String url;
-	public String category;
-	public String title;
-	public String caption;
-	public String userName;
-	public String tag;
-	public String stringDate;
-	public Date date;
-
-	public int access;
+	private int id;
+	private String url;
+	private String category;
+	private String title;
+	private String caption;
+	private String userName;
+	private String tag;
+	private String stringDate;
+	private Date date;
+	private int access;
 
 
 	public int getId() {
@@ -77,6 +76,8 @@ public class Article implements Serializable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+
 
 	public Article() {}
 	//登録用インスタンス作成コンストラクタ

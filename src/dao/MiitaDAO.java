@@ -15,22 +15,20 @@ import java.util.LinkedHashSet;
 import model.Article;
 
 public class MiitaDAO implements Serializable {
-	//記事のリスト用意
 
+	public String sql;
 
-	static String sql;
-
-	static Connection conn = null;
+	public Connection conn = null;
 	//DB接続用定数
-	static String DATABASE_NAME = "miita_proto";
-	static String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
-	static String URL = "jdbc:mySQL://localhost/" + DATABASE_NAME + PROPATIES;
+	private String DATABASE_NAME = "miita_proto";
+	private String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
+	private String URL = "jdbc:mySQL://localhost/" + DATABASE_NAME + PROPATIES;
 	//DB接続用・ユーザ定数
-	static String USER = "root";
-	static String PASS = "";
+	private String USER = "root";
+	private String PASS = "";
 
 	//DBカテゴリ検索用メソッド
-	public static ArrayList<Article> tableSearchCategory(String categoryWord) {
+	public  ArrayList<Article> tableSearchCategory(String categoryWord) {
 		ArrayList<Article> articleList = new ArrayList<Article>();
 
 		//検索内容がallの場合、新着５記事を取り出す
@@ -83,7 +81,7 @@ public class MiitaDAO implements Serializable {
 	}
 
 	//DBキーワード検索用メソッド
-	public static ArrayList<Article> tableSearchKeyword(String searchWord) {
+	public  ArrayList<Article> tableSearchKeyword(String searchWord) {
 		ArrayList<Article> articleList = new ArrayList<Article>();
 
 		//重複記事を格納しないために用意
@@ -164,7 +162,7 @@ public class MiitaDAO implements Serializable {
 	}
 
 	//登録時重複記事チェックメソッド
-	public static String checkDuplication(Article registData) {
+	public  String checkDuplication(Article registData) {
 		//データベースの中に既に同じURLが存在してないかチェックターン
 		String checkResult;
 
@@ -205,7 +203,7 @@ public class MiitaDAO implements Serializable {
 	}
 
 	//記事登録メソッド
-	public static boolean registerTable(Article registData) {
+	public  boolean registerTable(Article registData) {
 
 		//SQL文作成
 		sql = " INSERT INTO ARTICLES(url,category,title,caption,user_name,tag,date)"

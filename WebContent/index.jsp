@@ -118,7 +118,8 @@
 		<%
 			if (articleList == null){
 			//入っていなかった場合、新着5記事の取得
-			articleList = ArticleAdmin.categorySearch("all");
+			ArticleAdmin admin = new ArticleAdmin();
+			articleList = admin.categorySearch("all");
 			session.setAttribute("ARTICLE_LIST", articleList);
 		%>
 		<%
@@ -128,26 +129,26 @@
 			for (int i = 0; i < (size = articleList.size()); i++) {
 			%>
 			<div id="contents_box">
-                <img src="./img/<%=articleList.get(i).category%>.png" id="icon" >
+                <img src="./img/<%=articleList.get(i).getCategory()%>.png" id="icon" >
 				<div id="article_base">
 					<div id="article_text">
 						<div  id="article1">
-							<div class="title"><%=articleList.get(i).title%>
-								<a href= "<%=articleList.get(i).url%>"></a>
+							<div class="title"><%=articleList.get(i).getTitle()%>
+								<a href= "<%=articleList.get(i).getUrl()%>"></a>
 							</div>
-							<div class="caption"><%=articleList.get(i).caption%>
+							<div class="caption"><%=articleList.get(i).getCaption()%>
 							</div>
 						</div>
 						<div  id="article2">
-							<div class="author"><%=articleList.get(i).userName%>
+							<div class="author"><%=articleList.get(i).getUserName()%>
 							</div>
-							<div class="view_int">閲覧数:<%=articleList.get(i).access%>
+							<div class="view_int">閲覧数:<%=articleList.get(i).getAccess()%>
 							</div>
 						</div>
                     </div>
                 </div>
                 <div id ="side_menu">
-                    <div class ="date"><%=articleList.get(i).date%>
+                    <div class ="date"><%=articleList.get(i).getDate()%>
                     </div>
                     <div class="delete">
                         削除

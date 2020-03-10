@@ -30,6 +30,7 @@ public class Home extends HttpServlet {
 
 		//記事表示用リスト
 		ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
+		ArticleAdmin admin = new ArticleAdmin();
 
 		String sortWord = request.getParameter("sort"); //並べ替え条件
 		String category = request.getParameter("search_category"); //カテゴリ検索
@@ -37,11 +38,11 @@ public class Home extends HttpServlet {
 
 		//パラメータで処理分岐
 		if (keyWord != null) {//キーワード検索のみ
-			articleList = ArticleAdmin.keywordSearch(keyWord);
+			articleList = admin.keywordSearch(keyWord);
 			request.setAttribute("SEARCH_KEYWORD_CONDITION", keyWord);//URLリクエストパラメーター用
 
 		} else if (category != null) {//カテゴリ検索のみ
-			articleList = ArticleAdmin.categorySearch(category);
+			articleList = admin.categorySearch(category);
 			request.setAttribute("SEARCH_CATEGORY_CONDITION", category);
 
 		}
