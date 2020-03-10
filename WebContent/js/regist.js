@@ -101,10 +101,9 @@ window.onload = function() {
 
 	var popmessage =document.getElementById('js-popmessage');
 	popmessage.classList.add('popmessage-elem')
-	
+
 	var text ="初期";
-	var error = document.getElementById('error_text').innerHTML
-	
+
 	//登録機能実行時返ってきたエラー内容によって表示変更
 	if (error == "miss") {
 		text = "パスワードを間違えましたね"

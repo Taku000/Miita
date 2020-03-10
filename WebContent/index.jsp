@@ -163,8 +163,11 @@
 			if (registerError != null ){
 
 	%>
-	<div id = "error_text" hidden="hidden"><%= registerError %></div>
-	
+	<!--エラーメッセージをjs用の変数に格納  -->
+	<script type="text/javascript">
+		var error = '<%=registerError%>';
+	</script>
+
 				<div class="popup" id="js-popup">
 				  <div class="popup-inner">
 				    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
