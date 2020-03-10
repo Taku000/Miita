@@ -121,6 +121,7 @@
 			ArticleAdmin admin = new ArticleAdmin();
 			articleList = admin.categorySearch("all");
 			session.setAttribute("ARTICLE_LIST", articleList);
+
 		%>
 		<%
 			}

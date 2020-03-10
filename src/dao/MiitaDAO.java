@@ -15,17 +15,17 @@ import java.util.LinkedHashSet;
 import model.Article;
 
 public class MiitaDAO implements Serializable {
-
+	//SQL文の変数用意
 	public String sql;
-
 	public Connection conn = null;
+
 	//DB接続用定数
-	private String DATABASE_NAME = "miita_proto";
-	private String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
-	private String URL = "jdbc:mySQL://localhost/" + DATABASE_NAME + PROPATIES;
+	private final String DATABASE_NAME = "miita_proto";
+	private final String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
+	private final String URL = "jdbc:mySQL://localhost/" + DATABASE_NAME + PROPATIES;
 	//DB接続用・ユーザ定数
-	private String USER = "root";
-	private String PASS = "";
+	private final String USER = "root";
+	private final String PASS = "";
 
 	//DBカテゴリ検索用メソッド
 	public  ArrayList<Article> tableSearchCategory(String categoryWord) {
@@ -38,8 +38,7 @@ public class MiitaDAO implements Serializable {
 			sql = " select * from articles where category=?;";
 			//接続＆return
 		}
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+		try{Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
 			PreparedStatement stt = conn.prepareStatement(sql);
 			if (sql.contains("?")) {
@@ -68,7 +67,7 @@ public class MiitaDAO implements Serializable {
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
-		} finally {
+		}finally {
 			try {
 				if (conn != null) {
 					conn.close();

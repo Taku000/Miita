@@ -17,30 +17,33 @@ public class ArticleRegister {
 		//MiitaDAOのインスタンス作成
 		MiitaDAO mDao = new MiitaDAO();
 
-
 		String result;
 		boolean successOrFailure = true;
+
+
 		//URLがQiitaの記事かどうかをチェック
 		if (registUrl.contains("qiita.com") &&
 				(registUrl.contains("items") ||
 						registUrl.contains("private"))) {
+
 			System.out.println("Qiitaの記事だから登録を続行するよ");
+
 			//URL切り取って記事idに成形
 			String id = cutOutURL(registUrl);
+
 			//成形したidを使って記事データ取得
 			Article registArticleData = connectionAPI(id);
+
 			if (registArticleData == null) {
 				System.out.println("記事が見つからないよ");
 				return result = "notfound";
 			}
 
 			//インスタンスにまだ入れていないデータ追加
-
 			registArticleData.setUrl(registUrl);
 			registArticleData.setCategory(registCategory);
 
 			//アドレスの重複確認
-
 			result = mDao.checkDuplication(registArticleData);
 
 			if (result.equals("duplication")) {
@@ -50,6 +53,7 @@ public class ArticleRegister {
 				return result;
 
 			}
+
 			//DAOに登録を依頼する
 
 			successOrFailure = mDao.registerTable(registArticleData);
@@ -92,6 +96,7 @@ public class ArticleRegister {
 		String apiString = "https://qiita.com/api/v2/items/" + (id);
 		Article registArticleData = new Article();
 		String script = "";
+
 		try {
 			URL url = new java.net.URL(apiString);
 			//HttpURLConnection型にキャスト
