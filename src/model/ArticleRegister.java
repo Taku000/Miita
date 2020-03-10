@@ -52,9 +52,10 @@ public class ArticleRegister {
 			if (successOrFailure == false) {
 				return result = "registFailure";
 
+			}else {
+				System.out.println("記事の登録に成功したよ");
+				return result = "success";
 			}
-			System.out.println("記事の登録に成功したよ");
-			return result = "success";
 
 		} else {
 

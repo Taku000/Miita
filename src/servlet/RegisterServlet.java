@@ -44,20 +44,31 @@ public class RegisterServlet extends HttpServlet {
 		String registCategry = request.getParameter("category2");
 		String pass = request.getParameter("regist_pass");
 		String registerResult = null;
-		if(pass.equals("mgt")) {
+
+
+		if(pass.equals("mgt") && registCategry != null) {
+
 			//記事登録クラスを呼びだす
 			registerResult = ArticleRegister.register(registURL,registCategry);
+
 			//結果によって分岐
-			if (registerResult.equals("success")) {
+
+			if (registerResult.equals("success")) {//登録成功
 				HttpSession session = request.getSession();
 				session.setAttribute("ARTICLE_LIST", null);
-			}else {
+
+			}else {//登録失敗
 				request.setAttribute("REGISTER_ERROR", registerResult);
-				}
-		}else {
+
+			}
+
+		}else if((!(pass.equals("mgt")))&& registCategry !=null){//パスワードミス
 			request.setAttribute("REGISTER_ERROR", "miss");
 
+		}else if (registCategry == null) {//カテゴリ未選択
+			request.setAttribute("REGISTER_ERROR", "categoryNull");
 		}
+
 		request.removeAttribute("regist_url");
 		request.removeAttribute("category2");
 		request.removeAttribute("regist_pass");

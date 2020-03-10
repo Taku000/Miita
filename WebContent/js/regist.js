@@ -91,23 +91,52 @@ select1.addEventListener("change",function changeSelect1()
 				select2.options[0] = new Option("その他","other");
             }
 		})
+
 //登録に失敗した場合、モーダルでアラート表示したい
 
 window.onload = function() {
 	var popup = document.getElementById('js-popup');
 	if(!popup) return;
 	popup.classList.add('is-show');
-  
+
+	var popmessage =document.getElementById('js-popmessage');
+	popmessage.classList.add('popmessage-elem')
+	
+	var text ="初期";
+	var error = document.getElementById('error_text').innerHTML
+	
+	//登録機能実行時返ってきたエラー内容によって表示変更
+	if (error == "miss") {
+		text = "パスワードを間違えましたね"
+	}else if (error == "categoryNull") {
+		text = "カテゴリが未選択ですよ"
+	}else if(error == "notQiita"){
+		text = "Qiitaの記事ではありませんよ"
+	}else if(error == "notfound"){
+		text = "記事が見つかりませんよ"
+	}else if (error == "duplication" ) {
+		text = "その記事は既に登録されてますよ"
+	}else if(error == "registFailure"){
+		text = "なんか登録に失敗しましたよ"
+	}
+	popmessage.innerHTML = text;
+
+
+
+
+
 	var blackBg = document.getElementById('js-black-bg');
 	var closeBtn = document.getElementById('js-close-btn');
-  
+
 	closePopUp(blackBg);
 	closePopUp(closeBtn);
-  
+
 	function closePopUp(elem) {
 	  if(!elem) return;
 	  elem.addEventListener('click', function() {
 		popup.classList.remove('is-show');
+		popmessage.classList.remove('popmessage-elem');
+		popmessage.classList.remove('js-popmessage');
 	  })
 	}
   }

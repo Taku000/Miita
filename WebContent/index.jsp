@@ -161,35 +161,21 @@
 	<!-- 登録時ミスがあれば -->
 	<%
 			if (registerError != null ){
+
 	%>
-			<%
-				if(registerError.equals("miss")){
-			%>
+	<div id = "error_text" hidden="hidden"><%= registerError %></div>
+	
 				<div class="popup" id="js-popup">
 				  <div class="popup-inner">
 				    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
-				    <div class="popmessage">パスワードを間違えましたね</div>
+				    <div  class="popmessage" id="js-popmessage"></div>
 				  </div>
 				  <div class="black-background" id="js-black-bg"></div>
 				</div>
-			<%
-				}else if(registerError.equals("notQiita")){
-			%>
-				<div class="popup" id="js-popup">
-					  <div class="popup-inner">
-					    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
-					    <div class="popmessage">Qiitaの記事じゃありませんよ</div>
-					  </div>
-					  <div class="black-background" id="js-black-bg"></div>
-				</div>
-
-			<%
-				}
-			%>
-
 		<%
 			}
 		%>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="js/regist.js"></script>
 </body>
