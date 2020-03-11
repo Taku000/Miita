@@ -17,7 +17,8 @@ import model.Article;
 public class MiitaDAO implements Serializable {
 	//SQL文の変数用意
 	public String sql;
-	public Connection conn = null;
+	public ResultSet rs;
+
 
 	//DB接続用定数
 	private final String DATABASE_NAME = "miita_proto";
@@ -27,8 +28,24 @@ public class MiitaDAO implements Serializable {
 	private final String USER = "root";
 	private final String PASS = "";
 
-	//DBカテゴリ検索用メソッド
-	public  ArrayList<Article> tableSearchCategory(String categoryWord) {
+
+	 /**
+	   * ドライバ登録コンストラクタ
+	   * Class.forName
+	   */
+	public MiitaDAO() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	* カテゴリ検索用DB処理メソッド
+	* @param categoryWord 検索したいカテゴリ名
+	* @return 検索結果を格納したリスト
+	*/
+	public  ArrayList<Article> searchCategoryDB(String categoryWord) {
 		ArrayList<Article> articleList = new ArrayList<Article>();
 
 		//検索内容がallの場合、新着５記事を取り出す
@@ -38,14 +55,14 @@ public class MiitaDAO implements Serializable {
 			sql = " select * from articles where category=?;";
 			//接続＆return
 		}
-		try{Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			PreparedStatement stt = conn.prepareStatement(sql);
+		try(Connection conn = DriverManager.getConnection(this.URL, this.USER, this.PASS);
+				PreparedStatement stt = conn.prepareStatement(sql);)
+		{
 			if (sql.contains("?")) {
 				stt.setString(1, categoryWord);
 			}
 			// データベースに対する処理
-			ResultSet rs = stt.executeQuery();
+			rs = stt.executeQuery();
 
 			//ヒットした数だけリストに格納
 			while (rs.next()) {
@@ -64,46 +81,41 @@ public class MiitaDAO implements Serializable {
 			}
 			return articleList;
 
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-		}finally {
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 
 	}
 
-	//DBキーワード検索用メソッド
-	public  ArrayList<Article> tableSearchKeyword(String searchWord) {
+	/**
+	* キーワード検索用DB処理メソッド
+	* @param searchWord 検索したいカテゴリ名
+	* @return 検索結果を格納したリスト
+	*/
+	public  ArrayList<Article> searchKeywordDB(String searchWord){
 		ArrayList<Article> articleList = new ArrayList<Article>();
 
 		//重複記事を格納しないために用意
 		boolean result = true;
 		LinkedHashSet<Integer> hs = new LinkedHashSet<Integer>();
 
+		//検索語句の作成
+		//全角スペースを半角スペースに変換、半角スペースで単語を区切る
+		ArrayList<String> wordList = new ArrayList<String>
+		(Arrays.asList(searchWord.replaceAll("　", " ").split(" ",0)));
+
+		sql = "select * from articles WHERE (category LIKE ?) "
+				+ "OR (title LIKE ?)"
+				+ "OR (user_name LIKE ?)"
+				+ "OR(caption LIKE ?)"
+				+ "OR(tag LIKE ?);";
+
+
 		//接続＆return
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-
-			//検索語句の作成
-			//全角スペースを半角スペースに変換、半角スペースで単語を区切る
-			ArrayList<String> wordList = new ArrayList<String>
-			(Arrays.asList(searchWord.replaceAll("　", " ").split(" ",0)));
-
-			sql = "select * from articles WHERE (category LIKE ?) "
-					+ "OR (title LIKE ?)"
-					+ "OR (user_name LIKE ?)"
-					+ "OR(caption LIKE ?)"
-					+ "OR(tag LIKE ?);";
-
-			PreparedStatement pStatement = conn.prepareStatement(sql);
+		try (Connection conn = DriverManager.getConnection(this.URL, this.USER, this.PASS);
+				PreparedStatement pStatement = conn.prepareStatement(sql);)
+		{
 
 			//区切った単語の数だけ回す
 			for (int i = 0; i < wordList.size(); i++) {
@@ -112,7 +124,7 @@ public class MiitaDAO implements Serializable {
 					int num = j + 1;
 					pStatement.setString(num, "%" + wordList.get(i) + "%");
 				}
-				ResultSet rs = pStatement.executeQuery();
+				rs = pStatement.executeQuery();
 				while (rs.next()) {
 
 					int id = rs.getInt(1);
@@ -146,21 +158,14 @@ public class MiitaDAO implements Serializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
-		return articleList;
 	}
 
-	//登録時重複記事チェックメソッド
+	/**
+	* 登録時重複記事チェックメソッド
+	* @param registData 登録したい記事のデータ
+	* @return String 重複の有無
+	*/
 	public  String checkDuplication(Article registData) {
 		//データベースの中に既に同じURLが存在してないかチェックターン
 		String checkResult;
@@ -168,15 +173,13 @@ public class MiitaDAO implements Serializable {
 		//SQL文作成
 		sql = "select url  from  articles ;";
 
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			PreparedStatement stt = conn.prepareStatement(sql);
+		try (Connection conn = DriverManager.getConnection(this.URL, this.USER, this.PASS);
+				PreparedStatement stt = conn.prepareStatement(sql);)
+		{
 			// データベースに対する処理
-			ResultSet rs = stt.executeQuery();
+			rs = stt.executeQuery();
 			while (rs.next()) {
 				//getString(1)==URL
-
 				String url = rs.getString(1);
 				if (registData.getUrl().equals(url)) {
 					System.out.println("URLが重複してるよ");
@@ -185,24 +188,19 @@ public class MiitaDAO implements Serializable {
 			}
 			System.out.println("URLは重複してないよ");
 			return checkResult = "noDuplication";
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("MySQLとのやり取りでエラーが出たよ");
 			return checkResult = "error";
-		} finally {
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return checkResult = "error";
-			}
 		}
 	}
 
-	//記事登録メソッド
-	public  boolean registerTable(Article registData) {
+	/**
+	* 記事登録メソッド
+	* @param registData 登録したい記事のデータ
+	* @return boolean 処理の結果
+	*/
+	public  boolean registDB(Article registData) {
 
 		//SQL文作成
 		sql = " INSERT INTO ARTICLES(url,category,title,caption,user_name,tag,date)"
@@ -210,24 +208,15 @@ public class MiitaDAO implements Serializable {
 				+ "','" + registData.getCategory() + "','" + registData.getTitle()
 				+ "','" + registData.getCaption() + "','" + registData.getUserName()
 				+ "','" + registData.getTag() + "','" + registData.getStringDate() + "'" + ");";
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			Statement statement = conn.createStatement();
+		try(Connection conn = DriverManager.getConnection(URL, USER, PASS);
+				Statement statement = conn.createStatement();)
+		{
 			// データベースに対する処理
 			statement.executeUpdate(sql);
 			return true;
-		} catch (SQLException | ClassNotFoundException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		} finally {
-			try {
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }

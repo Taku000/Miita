@@ -48,7 +48,7 @@ public class Home extends HttpServlet {
 		}
 
 		if (sortWord != null) {//並べ替え処理
-			articleList = ArticleAdmin.sortArticles(articleList, sortWord);
+			articleList = admin.sortArticles(articleList, sortWord);
 			request.setAttribute("SORT_CONDITION", sortWord);
 		}
 

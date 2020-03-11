@@ -56,7 +56,7 @@ public class ArticleRegister {
 
 			//DAOに登録を依頼する
 
-			successOrFailure = mDao.registerTable(registArticleData);
+			successOrFailure = mDao.registDB(registArticleData);
 			if (successOrFailure == false) {
 				return result = "registFailure";
 
