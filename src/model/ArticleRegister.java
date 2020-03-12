@@ -13,9 +13,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.MiitaDAO;
 
 public class ArticleRegister {
+	//MiitaDAOのインスタンス作成
+			MiitaDAO mDao = new MiitaDAO();
+
+	/**
+	* 記事登録統括メソッド
+	* @param registUrl 登録したい記事のURL
+	* @param registCategory 登録したい記事のカテゴリ
+	* @return 処理結果のString
+	*/
 	public  String register(String registUrl, String registCategory) {
-		//MiitaDAOのインスタンス作成
-		MiitaDAO mDao = new MiitaDAO();
 
 		String result;
 		boolean successOrFailure = true;
@@ -32,19 +39,19 @@ public class ArticleRegister {
 			String id = cutOutURL(registUrl);
 
 			//成形したidを使って記事データ取得
-			Article registArticleData = connectionAPI(id);
+			Article articleData = connectionAPI(id);
 
-			if (registArticleData == null) {
+			if (articleData == null) {
 				System.out.println("記事が見つからないよ");
 				return result = "notfound";
 			}
 
 			//インスタンスにまだ入れていないデータ追加
-			registArticleData.setUrl(registUrl);
-			registArticleData.setCategory(registCategory);
+			articleData.setUrl(registUrl);
+			articleData.setCategory(registCategory);
 
 			//アドレスの重複確認
-			result = mDao.checkDuplication(registArticleData);
+			result = mDao.checkDuplication(articleData);
 
 			if (result.equals("duplication")) {
 				return result;
@@ -56,7 +63,7 @@ public class ArticleRegister {
 
 			//DAOに登録を依頼する
 
-			successOrFailure = mDao.registDB(registArticleData);
+			successOrFailure = mDao.registDB(articleData);
 			if (successOrFailure == false) {
 				return result = "registFailure";
 
@@ -73,11 +80,15 @@ public class ArticleRegister {
 		}
 	}
 
-	//URL切り取るメソッド
+	/**
+	* URL→API用ID変換メソッド
+	* @param registUrl 登録したい記事のURL
+	* @return 成形したAPI用ID
+	*/
 	public  String cutOutURL(String registURL) {
 		String fullUrl = registURL;
 		String id;
-		//受け取ったURLをcAPI用にid部分の文字列に切り取り
+		//受け取ったURLをAPI用にid部分の文字列に切り取り
 		if (fullUrl.contains("items/")) {
 			id = fullUrl.substring(fullUrl.indexOf("items/"));
 			id = id.substring(5);
@@ -91,10 +102,14 @@ public class ArticleRegister {
 		return id;
 	}
 
-	//切り取り成形されたidを使ってAPI接続、記事のデータを取得するメソッド
+	/**
+	* API接続メソッド
+	* @param id 取得したい記事のid
+	* @return 取得した記事のデータ
+	*/
 	public  Article connectionAPI(String id) {
 		String apiString = "https://qiita.com/api/v2/items/" + (id);
-		Article registArticleData = new Article();
+		Article articleData = new Article();
 		String script = "";
 
 		try {
@@ -139,17 +154,19 @@ public class ArticleRegister {
 			tag = buff.toString();
 			String date = (node.get("created_at").asText()).substring(0, 10);
 
-			registArticleData.setTitle(title);
-			registArticleData.setCaption(caption);
-			registArticleData.setUserName(userName);
-			registArticleData.setTag(tag);
-			registArticleData.setStringDate(date);
+			articleData.setTitle(title);
+			articleData.setCaption(caption);
+			articleData.setUserName(userName);
+			articleData.setTag(tag);
+			articleData.setStringDate(date);
 		} catch (FileNotFoundException e) {
 			System.out.println("記事が見つかりませんよ");
-			return registArticleData = null;
+			return articleData = null;
 		} catch (Exception e) {
 		}
-		return registArticleData;
+		return articleData;
 	}
 
+
 }
+

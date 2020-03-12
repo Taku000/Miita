@@ -36,7 +36,7 @@
 			<!-- ここからモーダルウィンドウ -->
 			<div id="modal-content">
 				<!-- モーダルウィンドウのコンテンツ開始 -->
-				<form name="regist_article" method="post" action="RegisterServlet">
+				<form name="regist_article" method="post" action="Home">
 				<div class="regist_title">Qiita記事登録画面</div>
 
 				<div class="URL">
@@ -151,9 +151,7 @@
                 <div id ="side_menu">
                     <div class ="date"><%=articleList.get(i).getDate()%>
                     </div>
-                    <div class="delete">
-                        削除
-                    </div>
+                    <button  type="button"  id="delete_modal_open" class="delete_button">削除</button>
                 </div>
 			</div>
 			<%

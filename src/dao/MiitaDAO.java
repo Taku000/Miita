@@ -67,7 +67,6 @@ public class MiitaDAO implements Serializable {
 
 			//ヒットした数だけリストに格納
 			while (rs.next()) {
-
 				int id = rs.getInt(1);
 				String url = rs.getString(2);
 				String category = rs.getString(3);
@@ -114,22 +113,24 @@ public class MiitaDAO implements Serializable {
 				reword.remove();
 			}
 		}
+		if (wordList.size()==0) {
+			return articleList;
+		}
 
-
+		//SQL文パーツ準備
 		String sql = "select * from articles WHERE (category LIKE ? "
 				+ "or title LIKE ? "
 				+ "or user_name LIKE ? "
 				+ "or caption LIKE ? "
 				+ "or tag LIKE ? )";
-
 		String sql2 ="AND (category LIKE ? "
 				+ "or title LIKE ? "
 				+ "or user_name LIKE ? "
 				+ "or caption LIKE ? "
 				+ "or tag LIKE ? )";
-
 		String end = ";";
 
+		//検索語句の数によってSQL文の下地を成形
 		if (wordList.size()<2) {
 
 		}else{
@@ -143,9 +144,8 @@ public class MiitaDAO implements Serializable {
 		try (Connection conn = DriverManager.getConnection(this.URL, this.USER, this.PASS);
 				PreparedStatement stt = conn.prepareStatement(sql);)
 		{
-			if (wordList.size()==0) {
-				return articleList;
-			}else if (wordList.size()<2) {
+			//SQL文内に検索語句を配置
+			if (wordList.size()<2) {
 				for(int i = 0; i < 5; i++) {
 					int num = i + 1;
 					stt.setString(num, "%" +wordList.get(0) + "%");
@@ -247,6 +247,35 @@ public class MiitaDAO implements Serializable {
 			// データベースに対する処理
 			statement.executeUpdate(sql);
 			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	* パスワードDB比較用メソッド
+	* @param inputPass 入力されたパスワード
+	* @return 一致の是非
+	*/
+	public boolean passwordCompare(String inputPass) {
+		//SQL文作成
+		sql = "select pass from pass_tables ;";
+		String basePass = null;
+
+		try(Connection conn = DriverManager.getConnection(URL, USER, PASS);
+				PreparedStatement stt = conn.prepareStatement(sql);)
+		{
+			// データベースに対する処理
+			rs = stt.executeQuery();
+			while (rs.next()) {
+			basePass = rs.getString(1);
+			}
+			if (inputPass.equals(basePass)) {
+				 return true;
+				}else {
+					return false;
+				}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
