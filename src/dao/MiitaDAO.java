@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 import model.Article;
@@ -93,7 +94,7 @@ public class MiitaDAO implements Serializable {
 	* @param searchWord 検索したいカテゴリ名
 	* @return 検索結果を格納したリスト
 	*/
-	public  ArrayList<Article> searchKeywordDB(String searchWord){
+	public ArrayList<Article> searchKeywordDB(String searchWord) {
 		ArrayList<Article> articleList = new ArrayList<Article>();
 
 		//重複記事を格納しないために用意
@@ -102,30 +103,63 @@ public class MiitaDAO implements Serializable {
 
 		//検索語句の作成
 		//全角スペースを半角スペースに変換、半角スペースで単語を区切る
-		ArrayList<String> wordList = new ArrayList<String>
-		(Arrays.asList(searchWord.replaceAll("　", " ").split(" ",0)));
+		ArrayList<String> wordList = new ArrayList<String>(
+				Arrays.asList(searchWord.replaceAll("　", " ").split(" ", 0)));
 
-		sql = "select * from articles WHERE (category LIKE ?) "
-				+ "OR (title LIKE ?)"
-				+ "OR (user_name LIKE ?)"
-				+ "OR(caption LIKE ?)"
-				+ "OR(tag LIKE ?);";
+		//空文字要素を排除
+		Iterator<String> reword = wordList.iterator();
+		while (reword.hasNext()) {
+			String str = reword.next();
+			if (str.equals("")) {
+				reword.remove();
+			}
+		}
 
+
+		String sql = "select * from articles WHERE (category LIKE ? "
+				+ "or title LIKE ? "
+				+ "or user_name LIKE ? "
+				+ "or caption LIKE ? "
+				+ "or tag LIKE ? )";
+
+		String sql2 ="AND (category LIKE ? "
+				+ "or title LIKE ? "
+				+ "or user_name LIKE ? "
+				+ "or caption LIKE ? "
+				+ "or tag LIKE ? )";
+
+		String end = ";";
+
+		if (wordList.size()<2) {
+
+		}else{
+			for(int i =1; i < wordList.size(); i++) {
+				sql = sql + sql2;
+			}
+		}
+		sql = sql + end;
 
 		//接続＆return
 		try (Connection conn = DriverManager.getConnection(this.URL, this.USER, this.PASS);
-				PreparedStatement pStatement = conn.prepareStatement(sql);)
+				PreparedStatement stt = conn.prepareStatement(sql);)
 		{
-
-			//区切った単語の数だけ回す
-			for (int i = 0; i < wordList.size(); i++) {
-				// パラメータの数分回す(5つ)
-				for (int j = 0; j < 5; j++) {
-					int num = j + 1;
-					pStatement.setString(num, "%" + wordList.get(i) + "%");
+			if (wordList.size()==0) {
+				return articleList;
+			}else if (wordList.size()<2) {
+				for(int i = 0; i < 5; i++) {
+					int num = i + 1;
+					stt.setString(num, "%" +wordList.get(0) + "%");
 				}
-				rs = pStatement.executeQuery();
-				while (rs.next()) {
+			}else {
+				for(int i = 0; i < wordList.size(); i++) {
+					for (int j = 0; j < 5; j++) {
+						int num = j+1;
+						stt.setString(num+(5*i), "%" +wordList.get(i) + "%");
+					}
+				}
+			}
+			rs = stt.executeQuery();
+			while (rs.next()){
 
 					int id = rs.getInt(1);
 					String url = rs.getString(2);
@@ -151,7 +185,6 @@ public class MiitaDAO implements Serializable {
 					} else {
 						continue;
 					}
-				}
 			}
 			return articleList;
 
