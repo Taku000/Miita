@@ -120,10 +120,6 @@ window.onload = function() {
 	}
 	popmessage.innerHTML = text;
 
-
-
-
-
 	var blackBg = document.getElementById('js-black-bg');
 	var closeBtn = document.getElementById('js-close-btn');
 
@@ -139,3 +135,30 @@ window.onload = function() {
 	  })
 	}
   }
+
+//削除ボタンを押すとモーダル出現
+const delbtn = document.getElementsByClassName('delete_button');
+
+for(let i = 0; i < delbtn.length; i++){
+
+	delbtn[i].addEventListener('click', function (){
+		
+	var deletepopup = document.getElementById('del-js-popup');
+	if(!deletepopup) return;
+		deletepopup.classList.add('del-is-show');
+
+		var delblackBg = document.getElementById('del-js-black-bg');
+		var delcloseBtn = document.getElementById('del-js-close-btn');
+
+		delclosePopUp(delblackBg);
+		delclosePopUp(delcloseBtn);
+
+		function delclosePopUp(elem) {
+			if(!elem) return;
+			elem.addEventListener('click', function() {
+			deletepopup.classList.remove('del-is-show');
+			})
+		}
+	},false);
+}
+
