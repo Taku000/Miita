@@ -142,10 +142,14 @@ const delbtn = document.getElementsByClassName('delete_button');
 for(let i = 0; i < delbtn.length; i++){
 
 	delbtn[i].addEventListener('click', function (){
-		
+	var form = delbtn[i].value;
 	var deletepopup = document.getElementById('del-js-popup');
+	var deletemes =document.getElementById('del-js-messeage');
 	if(!deletepopup) return;
 		deletepopup.classList.add('del-is-show');
+		deletemes.classList.add('del-is-id');
+
+		deletemes.innerHTML = form;
 
 		var delblackBg = document.getElementById('del-js-black-bg');
 		var delcloseBtn = document.getElementById('del-js-close-btn');
@@ -157,6 +161,7 @@ for(let i = 0; i < delbtn.length; i++){
 			if(!elem) return;
 			elem.addEventListener('click', function() {
 			deletepopup.classList.remove('del-is-show');
+			deletemes.classList.remove('del-is-id');
 			})
 		}
 	},false);

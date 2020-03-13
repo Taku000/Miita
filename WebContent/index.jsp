@@ -159,7 +159,7 @@
 			<div id="side_menu">
 				<div class="date"><%=articleList.get(i).getDate()%>
 				</div>
-				<button type="button" id="delete_modal_open" class="delete_button">削除</button>
+					<button type="submit" name= "deletevalue" id="delete_modal_open" class="delete_button" value = <%= articleList.get(i).getId()%> >削除</button>
 			</div>
 		</div>
 		<%
@@ -189,7 +189,8 @@
 	%>
 	<div class="deletepopup" id="del-js-popup">
 		<div class="delpopup-inner">
-			<div>この記事削除？</div>
+			<div class = "deletealert"  id ="del-js-messeage"></div>
+
 			<div class="delclose-btn" id="del-js-close-btn">
 				<i class="fas fa-times"></i>
 			</div>

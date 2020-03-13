@@ -312,7 +312,7 @@
     visibility: visible;
   }
 
-  
+
   .popup-inner {
     position: absolute;
     left: 50%;
@@ -325,7 +325,7 @@
     background-color: #fff;
     z-index: 2;
   }
-  
+
   .close-btn {
     position: absolute;
     right: 0;
@@ -385,6 +385,12 @@
     opacity: 1;
     visibility: visible;
   }
+
+  .deletepopup.del-is-id{
+    opacity: 1;
+    visibility: visible;
+  }
+
 
   .delpopup-inner {
     position: absolute;
