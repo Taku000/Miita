@@ -83,40 +83,55 @@ public class Home extends HttpServlet {
 
 
 		ArticleRegister aRegister = new ArticleRegister();
+		ArticleAdmin admin = new ArticleAdmin();
 		MiitaDAO mDao = new MiitaDAO();
 
-		//削除用パラメータがあれば
-		if (mDao.passwordCompare(deletePass) && deleteId !=null) {
-			deleteResult ="a";
+		if (deletePass != null) {
 
-		}else if (!(mDao.passwordCompare(deletePass))) {
-			request.setAttribute("REGISTER_ERROR", "miss");
-		}
+			//削除用パラメータがあれば
 
-		//登録用パラメータがあれば
-		if(mDao.passwordCompare(registPass) && registCategry != null) {
+			if (mDao.passwordCompare(deletePass) && deleteId !=null) {
+				deleteResult = admin.deleteArticles(deleteId);
 
-			//記事登録クラスを呼びだす
-			registerResult = aRegister.register(registURL,registCategry);
+				if (deleteResult.equals("deleteSuccess")) {//削除成功
 
-			//結果によって分岐
+					request.setAttribute("RESULT_STATUS", deleteResult);
+					HttpSession session = request.getSession();
+					session.setAttribute("ARTICLE_LIST", null);
 
-			if (registerResult.equals("success")) {//登録成功
-				HttpSession session = request.getSession();
-				session.setAttribute("ARTICLE_LIST", null);
+				}else {//削除失敗
+					request.setAttribute("RESULT_STATUS", deleteResult);
+				}
 
-			}else {//登録失敗
-				request.setAttribute("REGISTER_ERROR", registerResult);
+			}else if (!(mDao.passwordCompare(deletePass))) {//パスワードミス
+				request.setAttribute("RESULT_STATUS", "miss");
+			}
+		}else if (registPass != null) {
+			//登録用パラメータがあれば
+			if(mDao.passwordCompare(registPass) && registCategry != null) {
 
+				//記事登録クラスを呼びだす
+				registerResult = aRegister.register(registURL,registCategry);
+
+				//結果によって分岐
+
+				if (registerResult.equals("success")) {//登録成功
+					HttpSession session = request.getSession();
+					session.setAttribute("ARTICLE_LIST", null);
+
+				}else {//登録失敗
+					request.setAttribute("RESULT_STATUS", registerResult);
+
+				}
+
+			}else if((!(mDao.passwordCompare(registPass)))&& registCategry !=null){//パスワードミス
+				request.setAttribute("RESULT_STATUS", "miss");
+
+			}else if (registCategry == null) {//カテゴリ未選択
+				request.setAttribute("RESULT_STATUS", "categoryNull");
 			}
 
-		}else if((!(mDao.passwordCompare(registPass)))&& registCategry !=null){//パスワードミス
-			request.setAttribute("REGISTER_ERROR", "miss");
-
-		}else if (registCategry == null) {//カテゴリ未選択
-			request.setAttribute("REGISTER_ERROR", "categoryNull");
 		}
-
 		request.removeAttribute("regist_url");
 		request.removeAttribute("category2");
 		request.removeAttribute("regist_pass");

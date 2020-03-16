@@ -73,4 +73,21 @@ public class ArticleAdmin implements Serializable {
 		//並べ替えた記事リストを返却
 		return articleList;
 	}
+
+	/**
+	* 記事削除用メソッド
+	* @param articleId 削除対象の記事ID
+	* @return 削除の結果文
+	*/
+	public String deleteArticles(String articleId) {
+		String deleteresult=null;
+		//String型だったIDをintに変換
+		int intId = Integer.parseInt(articleId);
+
+		//DAOに削除依頼
+		 if (mDao.deleteArticleDB(intId)) {
+			return deleteresult= "deleteSuccess";
+		}
+		 return deleteresult= "deleteFailure";
+	}
 }

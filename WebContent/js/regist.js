@@ -92,7 +92,7 @@ select1.addEventListener("change",function changeSelect1()
             }
 		})
 
-//登録に失敗した場合、モーダルでアラート表示したい
+//モーダルでアラート表示したい
 
 window.onload = function() {
 	var popup = document.getElementById('js-popup');
@@ -104,19 +104,23 @@ window.onload = function() {
 
 	var text ="初期";
 
-	//登録機能実行時返ってきたエラー内容によって表示変更
-	if (error == "miss") {
+	//機能実行時返ってきた結果内容によって表示変更
+	if (result == "miss") {
 		text = "パスワードを間違えましたね"
-	}else if (error == "categoryNull") {
+	}else if (result == "categoryNull") {
 		text = "カテゴリが未選択ですよ"
-	}else if(error == "notQiita"){
+	}else if(result == "notQiita"){
 		text = "Qiitaの記事ではありませんよ"
-	}else if(error == "notfound"){
+	}else if(result == "notfound"){
 		text = "記事が見つかりませんよ"
-	}else if (error == "duplication" ) {
+	}else if (result == "duplication" ) {
 		text = "その記事は既に登録されてますよ"
-	}else if(error == "registFailure"){
+	}else if(result == "registFailure"){
 		text = "なんか登録に失敗しましたよ"
+	}else if(result == "deleteFailure"){
+		text = "なんか削除に失敗しましたよ"
+	}else if(result == "deleteSuccess"){
+		text = "削除に成功しましたよ"
 	}
 	popmessage.innerHTML = text;
 
@@ -147,7 +151,7 @@ for(let i = 0; i < delbtn.length; i++){
 	var deletemes =document.getElementById('del-js-messeage');
 	if(!deletepopup) return;
 		deletepopup.classList.add('del-is-show');
-		
+
 		deletemes.setAttribute('value',form);
 
 		var delblackBg = document.getElementById('del-js-black-bg');
@@ -160,7 +164,7 @@ for(let i = 0; i < delbtn.length; i++){
 			if(!elem) return;
 			elem.addEventListener('click', function() {
 			deletepopup.classList.remove('del-is-show');
-			
+
 			})
 		}
 	},false);

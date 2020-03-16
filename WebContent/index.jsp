@@ -14,7 +14,7 @@
 	String searchKeyWordCondition = (String) request.getAttribute("SEARCH_KEYWORD_CONDITION");
 	String searchCategoryCondition = (String) request.getAttribute("SEARCH_CATEGORY_CONDITION");
 	String sortWord = (String) request.getAttribute("SORT_CONDITION");
-	String registerError = (String) request.getAttribute("REGISTER_ERROR");
+	String resultStatus = (String) request.getAttribute("RESULT_STATUS");
 	int size;
 %>
 
@@ -167,13 +167,13 @@
 			}
 		%>
 	</div>
-	<!-- 登録時エラーがあれば -->
+	<!-- 処理結果文があれば -->
 	<%
-		if (registerError != null) {
+		if (resultStatus != null) {
 	%>
-	<!--エラーメッセージをjs用の変数に格納  -->
+	<!--結果文をjs用の変数に格納  -->
 	<script type="text/javascript">
-		var error = '<%=registerError%>';
+		var result = '<%=resultStatus%>';
 	</script>
 
 	<div class="popup" id="js-popup">
@@ -189,7 +189,7 @@
 		}
 	%>
 	<div class="deletepopup" id="del-js-popup">
-	<form  method="POST" action="check.jsp">
+	<form  method="POST" action="Home">
 		<div class="delpopup-inner">
 				<input type="text" name="delete_id" id ="del-js-messeage" hidden="hidden"></input>
 			<div class="del_text">この記事を削除しますか？</div>

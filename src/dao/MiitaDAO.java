@@ -281,4 +281,26 @@ public class MiitaDAO implements Serializable {
 			return false;
 		}
 	}
+
+	/**
+	* 記事DB削除用メソッド
+	* @param articleId 削除したい記事のID
+	* @return 削除の成否
+	*/
+	public boolean deleteArticleDB(int articleId) {
+		//sql文作成
+		sql = "DELETE FROM articles WHERE id = "+ articleId +";" ;
+
+		try(Connection conn = DriverManager.getConnection(URL, USER, PASS);
+				Statement statement = conn.createStatement();)
+		{
+			// データベースに対する処理
+			statement.executeUpdate(sql);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }
