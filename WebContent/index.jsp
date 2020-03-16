@@ -58,7 +58,7 @@
 					</div>
 					<p></p>
 					<div class="pass">
-						削除パス: <input type="password" name="regist_pass"
+						登録パス: <input type="password" name="regist_pass"
 							class="regist_pass" size="3"></input>
 					</div>
 					<input type="submit" class="regist_button" value="登録">
@@ -159,14 +159,15 @@
 			<div id="side_menu">
 				<div class="date"><%=articleList.get(i).getDate()%>
 				</div>
-					<button type="submit" name= "deletevalue" id="delete_modal_open" class="delete_button" value = <%= articleList.get(i).getId()%> >削除</button>
+					<button type="submit" name= "deletevalue" id="delete_modal_open" class="delete_button"
+						value = <%= articleList.get(i).getId()%> >削除</button>
 			</div>
 		</div>
 		<%
 			}
 		%>
 	</div>
-	<!-- 登録時ミスがあれば -->
+	<!-- 登録時エラーがあれば -->
 	<%
 		if (registerError != null) {
 	%>
@@ -188,13 +189,20 @@
 		}
 	%>
 	<div class="deletepopup" id="del-js-popup">
+	<form  method="POST" action="check.jsp">
 		<div class="delpopup-inner">
-			<div class = "deletealert"  id ="del-js-messeage"></div>
-
+				<input type="text" name="delete_id" id ="del-js-messeage" hidden="hidden"></input>
+			<div class="del_text">この記事を削除しますか？</div>
+			<div class="pass">
+						削除パス: <input type="password" name="delete_pass"
+							class="delete_pass" size="3"></input>
+					</div>
 			<div class="delclose-btn" id="del-js-close-btn">
 				<i class="fas fa-times"></i>
 			</div>
+			<button type="submit" class="delete_confirmation" name="">OK</button>
 		</div>
+	</form>
 		<div class="del-black-background" id="del-js-black-bg"></div>
 	</div>
 

@@ -12,8 +12,8 @@
 .regist_modal{
     width: 30%;
     height: 100%;
-    background-color: lightblue;
-    border: solid 1px lightslategray;
+    background-color: rgb(61, 150, 180);
+    border: solid 1px rgb(66, 75, 83);
     border-radius: 50%;
 }
 
@@ -91,6 +91,12 @@
 .regist_pass{
     display: inline-block;
     border: solid 1px black;
+
+}
+.delete_pass{
+    display: inline-block;
+    border: solid 1px black;
+    background-color: white;
 }
 .regist_button{
     margin-right: 0;
@@ -106,20 +112,19 @@
 #search_form{
     display: inline-block;
     width: 100%;
-    background-color: lightblue;
 }
 #search_box{
     display: inline-block;
     width: 20%;
     margin-right: 0;
-    background-color: lightblue;
+    background-color: rgb(190, 190, 190);
     border: solid 1px rgb(0, 0, 0);
 }
 .search_button{
     display: inline-block;
     width: 10%;
     margin-left: 0;
-    background-color: lightsalmon;
+    background-color: rgb(126, 122, 121);
     border: solid 1px rgb(0, 0, 0);
 }
 
@@ -132,16 +137,16 @@
 .java_buttton{
     display: inline-block;
     background-color: lightcyan;
-    border: solid 2px lightslategrey;
+    border: solid 2px rgb(52, 59, 66);
 }
 .Linux_buttton{
     display: inline-block;
     background-color: lightcyan;
-    border: solid 2px lightslategrey;
+    border: solid 2px rgb(52, 59, 66);
 }
 
 #contents_area{
-    background-color: maroon;
+    background-color: rgb(150, 71, 71);
     width: 100vw;
     height: auto;
     padding-top: 1%;
@@ -234,7 +239,7 @@
     height: 30%;
 }
 .title{
-    background-color: rgb(132, 169, 173);
+    background-color: rgb(212, 134, 61);
     position: relative;
     text-align: center;
     height: 50%;
@@ -250,7 +255,7 @@
 }
 
 .caption{
-    background-color: teal;
+    background-color: rgb(197, 194, 145);
     height: 50%;
     white-space: nowrap;
     overflow: hidden;
@@ -258,27 +263,27 @@
 
 }
 .author{
-    background-color: red;
+    background-color: rgb(189, 189, 189);
     width: 50%;
 
 
 }
 .view_int{
-    background-color: royalblue;
+    background-color: rgb(126, 135, 160);
     width: 50%
 }
 
 #side_menu{
     display: flex;
     flex-direction: column;
-    background-color: mediumslateblue;
+    background-color: rgb(111, 106, 134);
     width: 20%;
     height: 100%;
     margin-right: 2%;
 }
 .date{
     text-align: center;
-    background-color: orange;
+    background-color: rgb(221, 201, 163);
     width: 90%;
     height: 30%;
     margin:5%;
@@ -384,13 +389,27 @@
   .deletepopup.del-is-show {
     opacity: 1;
     visibility: visible;
+
   }
 
-  .deletepopup.del-is-id{
-    opacity: 1;
-    visibility: visible;
+  #del-js-messeage{
+      padding-top: 25%;
   }
 
+  .del_text{
+      margin-top: 25%;
+  }
+.delete_confirmation{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+   background-color: lawngreen;
+   width: 20%;
+   top: auto;
+
+}
+  
 
   .delpopup-inner {
     position: absolute;
@@ -398,8 +417,7 @@
     top: 50%;
     transform: translate(-50%,-50%);
     width: 80%;
-    height: 60%;
-    padding-top: 15%;
+    height: 60%;;
     max-width: 600px;
     border-radius: 10%;
     border: solid 5PX rgb(110, 121, 133);

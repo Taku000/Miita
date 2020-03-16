@@ -69,16 +69,32 @@ public class Home extends HttpServlet {
 			throws ServletException, IOException
 	{
 		request.setCharacterEncoding("UTF-8");
+		//登録用パラメータ
 		String registURL = request.getParameter("regist_url");
 		String registCategry = request.getParameter("category2");
-		String pass = request.getParameter("regist_pass");
+		String registPass = request.getParameter("regist_pass");
+
+		//削除用パラメータ
+		String deleteId = request.getParameter("delete_id");
+		String deletePass = request.getParameter("delete_pass");
+
+		String deleteResult = null;
 		String registerResult = null;
+
 
 		ArticleRegister aRegister = new ArticleRegister();
 		MiitaDAO mDao = new MiitaDAO();
 
+		//削除用パラメータがあれば
+		if (mDao.passwordCompare(deletePass) && deleteId !=null) {
+			deleteResult ="a";
 
-		if(mDao.passwordCompare(pass) && registCategry != null) {
+		}else if (!(mDao.passwordCompare(deletePass))) {
+			request.setAttribute("REGISTER_ERROR", "miss");
+		}
+
+		//登録用パラメータがあれば
+		if(mDao.passwordCompare(registPass) && registCategry != null) {
 
 			//記事登録クラスを呼びだす
 			registerResult = aRegister.register(registURL,registCategry);
@@ -94,7 +110,7 @@ public class Home extends HttpServlet {
 
 			}
 
-		}else if((!(mDao.passwordCompare(pass)))&& registCategry !=null){//パスワードミス
+		}else if((!(mDao.passwordCompare(registPass)))&& registCategry !=null){//パスワードミス
 			request.setAttribute("REGISTER_ERROR", "miss");
 
 		}else if (registCategry == null) {//カテゴリ未選択
@@ -104,6 +120,8 @@ public class Home extends HttpServlet {
 		request.removeAttribute("regist_url");
 		request.removeAttribute("category2");
 		request.removeAttribute("regist_pass");
+		request.removeAttribute("delete_id");
+		request.removeAttribute("delete_pass");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 	}

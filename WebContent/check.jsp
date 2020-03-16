@@ -1,10 +1,8 @@
 <%@ page contentType="text/html; charset=Shift_JIS" pageEncoding="UTF-8" %>
 <%@ page import = "model.Article"%>
-<%@ page import= "servlet.MainServlet"%>
 <%@ page import ="java.util.ArrayList"%>
 
 <%
-	ArrayList<Article> article = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
 	request.setCharacterEncoding("UTF-8");
 %>
 
@@ -16,8 +14,10 @@
 </head>
 <body>
 <div>
-<%String result = (String) request.getAttribute("REGISTER_RESULT"); %>
+<%String result = (String) request.getParameter("delete_pass"); %>
+<%String title = (String) request.getParameter("delete_id"); %>
 <%= result %>
+<%= title %>
 </div>
 </body>
 </html>
