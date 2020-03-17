@@ -34,11 +34,22 @@ public class Home extends HttpServlet {
 		ArrayList<Article> articleList = (ArrayList<Article>) session.getAttribute("ARTICLE_LIST");
 		ArticleAdmin admin = new ArticleAdmin();
 
+		String accessId = request.getParameter("accessId");//アクセス数追加用
 		String sortWord = request.getParameter("sort"); //並べ替え条件
 		String category = request.getParameter("search_category"); //カテゴリ検索
 		String keyWord = request.getParameter("search_keyword"); //キーワード検索
 
 		//パラメータで処理分岐
+		if (accessId != null) {
+			if (admin.addAccess(accessId)) {
+				session.removeAttribute("ARTICLE_LIST");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+				dispatcher.forward(request, response);
+				return;
+
+			}
+		}
+
 		if (keyWord != null) {//キーワード検索のみ
 			articleList = admin.keywordSearch(keyWord);
 			request.setAttribute("SEARCH_KEYWORD_CONDITION", keyWord);//URLリクエストパラメーター用

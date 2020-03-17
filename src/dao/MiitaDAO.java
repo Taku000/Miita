@@ -303,4 +303,25 @@ public class MiitaDAO implements Serializable {
 		}
 	}
 
+	/**
+	* DBアクセス数追加用メソッド
+	* @param articleId アクセス追加したい記事のID
+	*/
+	public boolean addAccessDB(int articleId) {
+		//sql文作成
+		sql = "UPDATE articles SET access=access+1 WHERE id = " + articleId + ";";
+
+		try(Connection conn = DriverManager.getConnection(URL, USER, PASS);
+				Statement statement = conn.createStatement();)
+		{
+			// データベースに対する処理
+			statement.executeUpdate(sql);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
 }

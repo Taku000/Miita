@@ -90,4 +90,21 @@ public class ArticleAdmin implements Serializable {
 		}
 		 return deleteresult= "deleteFailure";
 	}
+
+	/**
+	* アクセス追加用メソッド
+	* @param articleId アクセス追加したい記事のID
+	*/
+	public boolean addAccess(String articleId) {
+		//String型だったIDをintに変換
+		int intId = Integer.parseInt(articleId);
+
+		//DAOにアクセス追加依頼
+		if (mDao.addAccessDB(intId)) {
+			return true;
+		}else {
+			return false;
+		}
+
+	}
 }

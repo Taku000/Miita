@@ -95,7 +95,7 @@
 		<!-- 並べ替え機能 -->
 		<!-- セレクトボックスで選択した条件をボタンで送信 -->
 		<form method="GET" action="Home">
-			<select name="sort" class="sort_box">
+			<select name="sort" class="sort_box" onChange="submit(this.form)">
 				<option value="新着順"
 					<%="新着順".equals(sortWord) ? " selected=\"selected\"" : ""%>>新着順</option>
 				<option value="投稿順"
@@ -119,7 +119,6 @@
 			<%
 				}
 			%>
-			<button type="submit" class="sort_button" name="">並べ替え</button>
 		</form>
 		<!-- 記事の表示機能 -->
 		<!-- 記事リストのスコープに何か入っていたら、並べて表示 -->
@@ -143,7 +142,7 @@
 					<div id="article1">
 						<div class="title" id ="<%=articleList.get(i).getTitle()%>">
 							<%=articleList.get(i).getTitle()%>
-							<a href="<%=articleList.get(i).getUrl()%>"></a>
+							<a href="Home?accessId=<%=articleList.get(i).getId()%>"></a>
 						</div>
 						<div class="caption"><%=articleList.get(i).getCaption()%>
 						</div>

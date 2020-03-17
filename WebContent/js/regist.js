@@ -141,14 +141,14 @@ window.onload = function() {
   }
 
 //削除ボタンを押すとモーダル出現
-const delbtn = document.getElementsByClassName('delete_button');
-const artTitle =  document.getElementsByClassName('title');
+const DELBTN = document.getElementsByClassName('delete_button');
+const ARTTITLE =  document.getElementsByClassName('title');
 
-for(let i = 0; i < delbtn.length; i++){
+for(let i = 0; i < DELBTN.length; i++){
 
-	delbtn[i].addEventListener('click', function (){
-	var form = delbtn[i].value;
-	var title = artTitle[i].id;
+	DELBTN[i].addEventListener('click', function (){
+	var form = DELBTN[i].value;
+	var title = ARTTITLE[i].id;
 	var deletepopup = document.getElementById('del-js-popup');
 	var deletemes =document.getElementById('del-js-messeage');
 	var delTextJS =document.getElementById('del_text-js');
@@ -172,5 +172,8 @@ for(let i = 0; i < delbtn.length; i++){
 			})
 		}
 	},false);
+
 }
+
+
 
