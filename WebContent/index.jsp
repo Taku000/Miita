@@ -84,11 +84,11 @@
 	<!-- valueで検索するカテゴリを送信 -->
 	<form method="GET" class="category_button" action="Home">
 		<button type="submit" class="java_buttton" name="search_category"
-			value="Java" onclick="assignmentCategory(Java)">Java</button>
+			value="Java" >Java</button>
 	</form>
 	<form method="GET" class="category_button" action="Home">
 		<button type="submit" class="Linux_buttton" name="search_category"
-			value="Linux" onclick="assignmentCategory(Linux)">Linux</button>
+			value="Linux" >Linux</button>
 	</form>
 	<div id="contents_area">
 
@@ -141,7 +141,8 @@
 			<div id="article_base">
 				<div id="article_text">
 					<div id="article1">
-						<div class="title"><%=articleList.get(i).getTitle()%>
+						<div class="title" id ="<%=articleList.get(i).getTitle()%>">
+							<%=articleList.get(i).getTitle()%>
 							<a href="<%=articleList.get(i).getUrl()%>"></a>
 						</div>
 						<div class="caption"><%=articleList.get(i).getCaption()%>
@@ -159,7 +160,7 @@
 			<div id="side_menu">
 				<div class="date"><%=articleList.get(i).getDate()%>
 				</div>
-					<button type="submit" name= "deletevalue" id="delete_modal_open" class="delete_button"
+					<button type="submit" name= "deletevalue"  id="delete_modal_open" class="delete_button"
 						value = <%= articleList.get(i).getId()%> >削除</button>
 			</div>
 		</div>
@@ -191,8 +192,8 @@
 	<div class="deletepopup" id="del-js-popup">
 	<form  method="POST" action="Home">
 		<div class="delpopup-inner">
-				<input type="text" name="delete_id" id ="del-js-messeage" hidden="hidden"></input>
-			<div class="del_text">この記事を削除しますか？</div>
+				<input type="text" name="delete_id" id ="del-js-messeage" hidden="hidden" ></input>
+			<div class="del_text" id ="del_text-js"></div>
 			<div class="pass">
 						削除パス: <input type="password" name="delete_pass"
 							class="delete_pass" size="3"></input>

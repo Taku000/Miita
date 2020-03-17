@@ -142,15 +142,20 @@ window.onload = function() {
 
 //削除ボタンを押すとモーダル出現
 const delbtn = document.getElementsByClassName('delete_button');
+const artTitle =  document.getElementsByClassName('title');
 
 for(let i = 0; i < delbtn.length; i++){
 
 	delbtn[i].addEventListener('click', function (){
 	var form = delbtn[i].value;
+	var title = artTitle[i].id;
 	var deletepopup = document.getElementById('del-js-popup');
 	var deletemes =document.getElementById('del-js-messeage');
+	var delTextJS =document.getElementById('del_text-js');
+
 	if(!deletepopup) return;
 		deletepopup.classList.add('del-is-show');
+		delTextJS.innerHTML='<div class="deleteTitle">' + title + '</div><div >この記事を削除しますか？<div>';
 
 		deletemes.setAttribute('value',form);
 
@@ -164,7 +169,6 @@ for(let i = 0; i < delbtn.length; i++){
 			if(!elem) return;
 			elem.addEventListener('click', function() {
 			deletepopup.classList.remove('del-is-show');
-
 			})
 		}
 	},false);

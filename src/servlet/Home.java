@@ -87,12 +87,13 @@ public class Home extends HttpServlet {
 		MiitaDAO mDao = new MiitaDAO();
 
 		if (deletePass != null) {
-
 			//削除用パラメータがあれば
 
 			if (mDao.passwordCompare(deletePass) && deleteId !=null) {
+				//記事削除クラス呼び出し
 				deleteResult = admin.deleteArticles(deleteId);
 
+				//結果によって分岐
 				if (deleteResult.equals("deleteSuccess")) {//削除成功
 
 					request.setAttribute("RESULT_STATUS", deleteResult);
@@ -106,6 +107,7 @@ public class Home extends HttpServlet {
 			}else if (!(mDao.passwordCompare(deletePass))) {//パスワードミス
 				request.setAttribute("RESULT_STATUS", "miss");
 			}
+
 		}else if (registPass != null) {
 			//登録用パラメータがあれば
 			if(mDao.passwordCompare(registPass) && registCategry != null) {
